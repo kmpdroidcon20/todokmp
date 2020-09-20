@@ -1,13 +1,6 @@
 setupMultiplatformLibrary(project)
 setupTargetsWithDefaultSourceSets(project, SupportedTargets.COMMON)
 
-kotlin {
-    sourceSets {
-        iosArm64Main.dependsOn iosX64Main
-        iosArm64Test.dependsOn iosX64Test
-    }
-}
-
 task sourcesJar(type: Jar) {
     getArchiveBaseName().set("todokmp")
     getArchiveClassifier().set("sources")
