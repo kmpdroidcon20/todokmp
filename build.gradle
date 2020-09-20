@@ -1,0 +1,192 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+
+        mavenCentral()
+        maven { url "https://kotlin.bintray.com/kotlinx" }
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "http://dl.bintray.com/kotlin/kotlin-eap" }
+
+
+    }
+    dependencies {
+        classpath Deps.android.plugin
+        classpath Deps.kotlin.plugin
+        classpath Deps.sqlDelight.plugin
+        classpath Deps.sqlDelight.runtime
+        classpath Deps.kotlinx.atomicfu.plugin
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    group GROUP
+    version VERSION
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+        jcenter()
+
+        maven { url "http://dl.bintray.com/kotlin/kotlin-eap" }
+        maven { url "https://kotlin.bintray.com/kotlinx" }
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "http://dl.bintray.com/kotlin/kotlinx.html" }
+        maven { url "https://dl.bintray.com/badoo/maven" }
+    }
+}
+
+void setupMultiplatformLibrary(Project project, List<String> platforms = SupportedTargets.COMMON, Boolean shouldPublish = true) {
+    project.apply plugin: 'org.jetbrains.kotlin.multiplatform'
+
+    project.group = GROUP
+    project.version = VERSION
+
+    project.kotlin {
+        sourceSets {
+            commonTest {
+                dependencies {
+                    implementation Deps.kotlin.test.common
+                    implementation Deps.kotlin.test.annotationsCommon
+                    implementation Deps.careem.mockingbird.common
+                }
+            }
+        }
+    }
+}
+
+void setupTargetsWithDefaultSourceSets(Project project, List<String> platforms = SupportedTargets.COMMON, Boolean addSqlDelightCompilerArgs = false) {
+    if (platforms.contains(SupportedTargets.IOS)) {
+        setupIosTargets(project, addSqlDelightCompilerArgs)
+    }
+
+    if (platforms.contains(SupportedTargets.JVM)) {
+        setupJvmTarget(project)
+    }
+
+    if (platforms.contains(SupportedTargets.ANDROID)) {
+        setupAndroidTarget(project)
+    }
+
+    project.kotlin {
+        sourceSets {
+            all {
+                group GROUP
+                version VERSION
+
+                languageSettings {
+                    progressiveMode = true
+                    useExperimentalAnnotation('kotlin.Experimental')
+                }
+            }
+        }
+    }
+}
+
+
+private void setupIosTargets(Project project, Boolean addSqlDelightCompilerArgs = false) {
+    project.kotlin {
+        targets.fromPreset(presets.iosX64, 'iosX64') {
+            if (addSqlDelightCompilerArgs) {
+                compilations.each {
+                    it.kotlinOptions.freeCompilerArgs += ["-linker-options", "-lsqlite3"]
+                }
+            }
+        }
+        targets.fromPreset(presets.iosArm64, 'iosArm64') {
+            if (addSqlDelightCompilerArgs) {
+                compilations.each {
+                    it.kotlinOptions.freeCompilerArgs += ["-linker-options", "-lsqlite3"]
+                }
+            }
+        }
+
+        sourceSets {
+            iosX64Main.dependsOn nativeCommonMain
+            iosX64Test.dependsOn nativeCommonTest
+            iosArm64Main.dependsOn nativeCommonMain
+            iosArm64Test.dependsOn nativeCommonTest
+        }
+    }
+}
+
+private void setupJvmTarget(Project project) {
+    project.kotlin {
+        targets.fromPreset(presets.jvm, 'jvm')
+
+        sourceSets {
+            jvmMain {
+                dependencies {
+
+                }
+            }
+
+            jvmTest {
+                dependencies {
+                    implementation Deps.kotlin.test.junit
+                }
+            }
+        }
+    }
+}
+
+private void setupAndroidTarget(Project project) {
+    project.apply plugin: 'com.android.library'
+
+    project.android {
+        compileSdkVersion Deps.android.compileSdkVersion
+        defaultConfig {
+            minSdkVersion Deps.android.minSdkVersion
+            targetSdkVersion Deps.android.targetSdkVersion
+            versionCode 1
+            versionName VERSION
+        }
+        buildTypes {
+            release {
+                minifyEnabled false
+                consumerProguardFiles 'proguard-rules.pro'
+            }
+        }
+
+        // By default the android gradle plugin expects to find the kotlin source files in
+        // the folder `main` and the test in the folder `test`. This is to be able place
+        // the source code files inside androidMain and androidTest folders
+        sourceSets {
+            main {
+                manifest.srcFile 'src/androidMain/AndroidManifest.xml'
+                java.srcDirs = ['src/androidMain/kotlin']
+                res.srcDirs = ['src/androidMain/res']
+            }
+            test {
+                java.srcDirs = ['src/androidTest/kotlin', 'src/commonTest/kotlin']
+                res.srcDirs = ['src/androidTest/res']
+            }
+        }
+
+        libraryVariants.all { variant ->
+            variant.outputs.all { output ->
+                outputFileName = "${project.name}-${defaultConfig.versionName}.aar"
+            }
+        }
+    }
+
+    project.kotlin {
+        targets.fromPreset(presets.android, 'android')
+
+        sourceSets {
+            androidMain {
+                dependencies {
+                }
+            }
+
+            androidTest {
+                dependencies {
+                    implementation Deps.kotlin.test.junit
+                }
+            }
+        }
+    }
+}
