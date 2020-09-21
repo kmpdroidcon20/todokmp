@@ -1,0 +1,16 @@
+PODS:
+  - TodoCommon (1.0.0)
+
+DEPENDENCIES:
+  - TodoCommon (from `../iosframework/build/bin/iosUniversal/TodoCommonReleaseFramework`)
+
+EXTERNAL SOURCES:
+  TodoCommon:
+    :path: "../iosframework/build/bin/iosUniversal/TodoCommonReleaseFramework"
+
+SPEC CHECKSUMS:
+  TodoCommon: 8a9d7deea067893d2e408d2356b02f7d18424227
+
+PODFILE CHECKSUM: 286acf41b6d4035844de60ccb6cfc88a38c7824e
+
+COCOAPODS: 1.9.1

@@ -1,0 +1,119 @@
+apply plugin: 'kotlin-multiplatform'
+apply plugin: 'kotlin-multiplatform'
+apply plugin: 'kotlinx-serialization'
+
+import org.apache.tools.ant.filters.ReplaceTokens
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
+import org.jetbrains.kotlin.gradle.tasks.FatFrameworkTask
+
+import java.nio.file.Paths
+
+def frameworkName = 'TodoCommon'
+def publicationName = 'IosUniversal'
+
+kotlin {
+    targets {
+        fromPreset(presets.iosX64, 'iosX64') {
+            compilations.each {
+                it.kotlinOptions.freeCompilerArgs += ["-linker-options", "-lsqlite3"]
+            }
+        }
+        fromPreset(presets.iosArm64, 'iosArm64') {
+            compilations.each {
+                it.kotlinOptions.freeCompilerArgs += ["-linker-options", "-lsqlite3"]
+            }
+        }
+    }
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation Deps.kotlin.stdlib.common
+            }
+        }
+        iosX64Main {
+            dependencies {
+                api project(":todo-shared")
+                api project(":todo-core")
+                api project(":todo-util")
+                api project(":todo-sqldelight-repository")
+            }
+        }
+        iosArm64Main {
+            dependsOn iosX64Main
+        }
+        iosTest {
+            iosX64Test.dependsOn it
+
+            dependencies {
+                implementation Deps.kotlin.test.test
+                implementation Deps.kotlin.test.annotationsCommon
+            }
+        }
+    }
+
+    def ios64 = iosArm64("iosArm64")
+    def iosSim = iosX64("iosX64")
+
+    [ios64, iosSim].forEach {
+        def platform = it.name.toLowerCase()
+        it.binaries.framework(frameworkName) {
+            // Exporting dependencies in framework.
+            export project(":todo-shared")
+            export project(":todo-core")
+            export project(":todo-util")
+            export project(":todo-sqldelight-repository")
+
+            freeCompilerArgs += [
+                    "-Xobjc-generics", // enable experimental extended Objective-C generics support
+                    "-Xg0", // enable experimental dSYM file generation for release binaries
+            ]
+            transitiveExport = true
+        }
+    }
+
+    [NativeBuildType.RELEASE, NativeBuildType.DEBUG].each { buildType ->
+        def buildTypeName = buildType.name.capitalize()
+        def destination = Paths.get(project.buildDir.absolutePath,
+                "bin",
+                "iosUniversal",
+                "${frameworkName}${buildTypeName}Framework")
+
+        def mergeThinFrameworks = task("mergeThinFrameworks$buildTypeName", type: FatFrameworkTask) {
+            baseName = frameworkName
+            from(
+                    ios64.binaries.getFramework(frameworkName, buildType),
+                    iosSim.binaries.getFramework(frameworkName, buildType),
+            )
+            group = "build"
+            description = "Builds a universal iOS framework ($buildTypeName)"
+            destinationDir = file(destination)
+        }
+
+        def podspec = task("podspec$buildTypeName", type: Copy) {
+            group = "build"
+            description = "Generates a podspec for the universal framework"
+
+            inputs.property('VERSION', VERSION)
+
+            from '.'
+            include '*.podspec.template'
+            rename '(.*\\.podspec)\\.template', '$1'
+            into mergeThinFrameworks.destinationDir
+            filter(ReplaceTokens, tokens: [NAME: frameworkName, VERSION: VERSION])
+        }
+
+        task("iosUniversalFramework$buildTypeName") {
+            group = "build"
+            dependsOn mergeThinFrameworks, podspec
+        }
+    }
+
+    task zipUniversalFramework(type: Zip) {
+        group = "publishing"
+        description = "Creates a zip containing the release version of universal framework with podpsec"
+
+        dependsOn iosUniversalFrameworkRelease
+        from mergeThinFrameworksRelease.destinationDir
+        archiveBaseName.set frameworkName
+    }
+}

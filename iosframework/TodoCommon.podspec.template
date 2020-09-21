@@ -1,0 +1,14 @@
+Pod::Spec.new do |spec|
+  spec.name         = '@NAME@'
+  spec.version      = '@VERSION@'
+  spec.summary      = 'TodoCommon'
+  spec.homepage     = 'https://github.com/kmpdroidcon20/todokmp'
+
+  spec.authors      = { 'Marco Signoretto, Mina Eweida' => 'marco.signoretto.dev@gmail.com, mina.eweida@gmail.com' }
+
+  spec.platform     = :ios
+  spec.source       = { :git => 'https://github.com/kmpdroidcon20/todokmp.git' }
+  spec.ios.deployment_target  = '10.0'
+
+  spec.ios.vendored_frameworks = '@NAME@.framework'
+end
