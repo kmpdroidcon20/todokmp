@@ -1,0 +1,27 @@
+setupMultiplatformLibrary(project)
+setupTargetsWithDefaultSourceSets(project, SupportedTargets.MOBILE)
+
+apply plugin: 'kotlinx-serialization'
+
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(":todo-util")
+                implementation project(":todo-core")
+                implementation project(":todo-sqldelight-repository")
+                implementation Deps.kotlinx.serialization.runtime
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    getArchiveBaseName().set("todokmp")
+    getArchiveClassifier().set("sources")
+    from kotlin.sourceSets.commonMain.kotlin.srcDirs, kotlin.sourceSets.androidMain.kotlin.srcDirs
+}
+
+artifacts {
+    archives sourcesJar
+}

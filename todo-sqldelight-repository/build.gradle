@@ -1,0 +1,53 @@
+setupMultiplatformLibrary(project)
+setupTargetsWithDefaultSourceSets(project, SupportedTargets.ALL)
+
+apply plugin: 'kotlinx-serialization'
+apply plugin: 'com.squareup.sqldelight'
+
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(":todo-util")
+                implementation project(":todo-core")
+                implementation Deps.kotlinx.serialization.runtime
+                implementation Deps.sqlDelight.runtime
+                implementation Deps.kotlinx.atomicfu.common
+            }
+        }
+
+        androidMain {
+            dependencies {
+                implementation Deps.sqlDelight.driver.android
+            }
+        }
+
+        jvmMain {
+            dependencies {
+                implementation Deps.sqlDelight.driver.sqlite
+            }
+        }
+
+        nativeCommonMain {
+            dependencies {
+                implementation Deps.sqlDelight.driver.native
+            }
+        }
+    }
+}
+
+sqldelight {
+    Database { // This will be the name of the generated database class.
+        packageName = "com.kmpdroidcon.todokmp"
+    }
+}
+
+task sourcesJar(type: Jar) {
+    getArchiveBaseName().set("todokmp")
+    getArchiveClassifier().set("sources")
+    from kotlin.sourceSets.commonMain.kotlin.srcDirs, kotlin.sourceSets.jvmMain.kotlin.srcDirs
+}
+
+artifacts {
+    archives sourcesJar
+}

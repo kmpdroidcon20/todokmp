@@ -1,0 +1,17 @@
+CREATE TABLE TodoItemModel (
+    timestamp INTEGER NOT NULL,
+    todo TEXT NOT NULL
+);
+
+insertItem:
+INSERT OR FAIL INTO TodoItemModel(timestamp, todo) VALUES (?, ?);
+
+
+selectAll:
+SELECT * FROM TodoItemModel;
+
+count:
+SELECT COUNT(*) FROM TodoItemModel;
+
+deleteAll:
+DELETE FROM TodoItemModel;
