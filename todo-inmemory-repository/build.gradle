@@ -1,17 +1,25 @@
 setupMultiplatformLibrary(project)
 setupTargetsWithDefaultSourceSets(project, SupportedTargets.COMMON)
 
-
 kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                // TODO remove when threadedTest is moved to test module
-                implementation Deps.careem.mockingbird.common
+                implementation project(":todo-core")
+                implementation project(":todo-util")
+                implementation Deps.stately.isolate.common
+                implementation Deps.stately.isoCollections.common
+            }
+        }
+
+        commonTest {
+            dependencies {
+                implementation Deps.kotlinx.atomicfu.common
             }
         }
     }
 }
+
 task sourcesJar(type: Jar) {
     getArchiveBaseName().set("todokmp")
     getArchiveClassifier().set("sources")

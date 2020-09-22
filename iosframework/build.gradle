@@ -36,6 +36,7 @@ kotlin {
                 api project(":todo-core")
                 api project(":todo-util")
                 api project(":todo-sqldelight-repository")
+                api project(":todo-inmemory-repository")
             }
         }
         iosArm64Main {

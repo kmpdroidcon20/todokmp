@@ -1,8 +1,6 @@
 setupMultiplatformLibrary(project)
 setupTargetsWithDefaultSourceSets(project, SupportedTargets.MOBILE)
 
-apply plugin: 'kotlinx-serialization'
-
 kotlin {
     sourceSets {
         commonMain {
@@ -10,7 +8,7 @@ kotlin {
                 implementation project(":todo-util")
                 implementation project(":todo-core")
                 implementation project(":todo-sqldelight-repository")
-                implementation Deps.kotlinx.serialization.runtime
+                implementation project(":todo-inmemory-repository")
             }
         }
     }
