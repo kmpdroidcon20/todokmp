@@ -1,7 +1,6 @@
 setupMultiplatformLibrary(project)
 setupTargetsWithDefaultSourceSets(project, SupportedTargets.ALL)
 
-apply plugin: 'kotlinx-serialization'
 apply plugin: 'com.squareup.sqldelight'
 
 kotlin {
@@ -10,7 +9,6 @@ kotlin {
             dependencies {
                 implementation project(":todo-util")
                 implementation project(":todo-core")
-                implementation Deps.kotlinx.serialization.runtime
                 implementation Deps.sqlDelight.runtime
                 implementation Deps.kotlinx.atomicfu.common
             }
