@@ -11,6 +11,21 @@ kotlin {
                 implementation project(":todo-inmemory-repository")
             }
         }
+
+        androidTest {
+            dependencies {
+                implementation Deps.android.testRunner
+                implementation Deps.android.androidx.junitAndroidx
+                implementation Deps.robolectric
+                implementation Deps.sqlDelight.driver.sqlite
+            }
+        }
+
+        nativeCommonTest {
+            dependencies {
+                implementation Deps.sqlDelight.driver.native
+            }
+        }
     }
 }
 

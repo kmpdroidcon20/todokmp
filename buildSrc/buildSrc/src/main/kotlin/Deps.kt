@@ -1,6 +1,21 @@
 object Deps {
-
     private const val kotlinVersion = "1.4.10"
+    private const val junitAndroidxVersion = "1.1.1"
+    private const val robolectricVersion = "4.3.1"
+    private const val atomicFuVersion = "0.14.4"
+    private const val serializationVersion = "1.0.0-RC"
+    private const val sqlDelightVersion = "1.4.3"
+    private const val mockingBirdVersion =
+        "1.5.0-SNAPSHOT" // TODO use the version supporting kotlin 1.4
+    private const val statelyVersion = "1.1.0-a1"
+    private const val androidGradlePlugin = "4.0.1"
+    private const val testRunnerVersion = "1.0.2"
+    private const val appCompatVersion = "1.1.0"
+    private const val constraintLayoutVersion = "1.1.3"
+    private const val androidxKtxVersion = "1.2.0"
+    private const val reaktiveVersion = "1.1.17"
+    private const val espressoVersion = "3.0.2"
+    private const val junitVersion = "4.12"
 
     val kotlin = Kotlin
     val stately = Stately
@@ -12,9 +27,7 @@ object Deps {
     val reaktive = Reaktive
 
     // Robolectric
-    private const val robolectricVersion = "4.3.1"
     const val robolectric = "org.robolectric:robolectric:$robolectricVersion"
-
 
     object Kotlin {
         val stdlib = Stdlib()
@@ -47,10 +60,7 @@ object Deps {
         val atomicfu = AtomicFu
         val serialization = Serialization
 
-        private const val atomicFuVersion = "0.14.4"
-
         object AtomicFu {
-            private const val atomicFuVersion = "0.14.4"
             const val plugin = "org.jetbrains.kotlinx:atomicfu-gradle-plugin:$atomicFuVersion"
             const val common = "org.jetbrains.kotlinx:atomicfu:$atomicFuVersion"
         }
@@ -59,7 +69,6 @@ object Deps {
             const val plugin = "org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion"
             val runtime = Runtime()
 
-            private const val serializationVersion = "1.0.0-RC"
 
             class Runtime(
                 private val name: String = "org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion"
@@ -74,14 +83,12 @@ object Deps {
         val mockingbird = MockingBird
 
         object MockingBird {
-            private const val mockingBirdVersion =
-                "1.5.0-SNAPSHOT" // TODO use the version supporting kotlin 1.4
+
             const val common = "com.careem.mockingbird:mockingbird:$mockingBirdVersion"
         }
     }
 
     object SqlDelight {
-        private const val sqlDelightVersion = "1.4.3"
         const val plugin = "com.squareup.sqldelight:gradle-plugin:$sqlDelightVersion"
         const val runtime = "com.squareup.sqldelight:runtime:$sqlDelightVersion"
         val driver = Driver
@@ -95,8 +102,6 @@ object Deps {
     }
 
     object Stately {
-        private const val statelyVersion = "1.1.0-a1"
-
         val isoCollections = IsoCollections
         val isolate = Isolate
 
@@ -113,35 +118,33 @@ object Deps {
         const val compileSdkVersion = 29
         const val minSdkVersion = 21
         const val targetSdkVersion = 29
-        private const val androidGradlePlugin = "4.0.1"
+
         const val plugin = "com.android.tools.build:gradle:$androidGradlePlugin"
         val androidx = Androidx
 
-        private const val appCompatVersion = "1.1.0"
         const val appCompat = "androidx.appcompat:appcompat:$appCompatVersion"
-        private const val constraintLayoutVersion = "1.1.3"
         const val constraintLayout =
             "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
 
-        const val testRunner = "com.android.support.test:runner:1.0.2"
-        const val espresso = "com.android.support.test.espresso:espresso-core:3.0.2"
+        const val testRunner = "com.android.support.test:runner:$testRunnerVersion"
+        const val espresso = "com.android.support.test.espresso:espresso-core:$espressoVersion"
 
         object Androidx {
             val core = Core
+            const val junitAndroidx = "androidx.test.ext:junit:$junitAndroidxVersion"
+
 
             object Core {
-                private const val androidxKtxVersion = "1.2.0"
                 const val ktx = "androidx.core:core-ktx:$androidxKtxVersion"
             }
         }
     }
 
     object JUnit {
-        const val junit = "junit:junit:4.12"
+        const val junit = "junit:junit:$junitVersion"
     }
 
     object Reaktive {
-        private const val reaktiveVersion = "1.1.17"
         const val reaktive = "com.badoo.reaktive:reaktive:$reaktiveVersion"
         const val coroutinesInterop = "com.badoo.reaktive:coroutines-interop:$reaktiveVersion"
         const val testing = "com.badoo.reaktive:reaktive-testing:$reaktiveVersion"
