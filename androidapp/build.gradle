@@ -28,6 +28,7 @@ dependencies {
     implementation Deps.android.appCompat
     implementation Deps.android.constraintLayout
     implementation Deps.android.recyclerview
+    implementation Deps.reaktive.reaktive
 
     implementation project(":todo-shared")
     implementation project(":todo-core")
@@ -35,5 +36,4 @@ dependencies {
     testImplementation Deps.junit.junit
     androidTestImplementation Deps.android.testRunner
     androidTestImplementation Deps.android.espresso
-
 }

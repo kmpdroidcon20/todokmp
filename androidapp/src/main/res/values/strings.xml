@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="create_button_text">Create</string>
+    <string name="todo_text">TODO content</string>
 </resources>
