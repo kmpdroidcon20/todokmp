@@ -1,5 +1,5 @@
 object Deps {
-    private const val kotlinVersion = "1.4.10"
+    private const val kotlinVersion = "1.4.0"
     private const val junitAndroidxVersion = "1.1.1"
     private const val robolectricVersion = "4.3.1"
     private const val atomicFuVersion = "0.14.4"
