@@ -16,6 +16,7 @@ object Deps {
     private const val reaktiveVersion = "1.1.17"
     private const val espressoVersion = "3.0.2"
     private const val junitVersion = "4.12"
+    private const val androidxVersion = "1.0.0"
 
     val kotlin = Kotlin
     val stately = Stately
@@ -128,6 +129,7 @@ object Deps {
 
         const val testRunner = "com.android.support.test:runner:$testRunnerVersion"
         const val espresso = "com.android.support.test.espresso:espresso-core:$espressoVersion"
+        const val recyclerview = "androidx.recyclerview:recyclerview:$androidxVersion"
 
         object Androidx {
             val core = Core
