@@ -30,7 +30,7 @@ dependencies {
     implementation Deps.android.recyclerview
 
     implementation project(":todo-shared")
-    implementation project(":todo-core") // TODO remove and use UI model from Shared
+    implementation project(":todo-core")
 
     testImplementation Deps.junit.junit
     androidTestImplementation Deps.android.testRunner

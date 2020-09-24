@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.kmpdroidcon.core.model.TodoItem
+import com.kmpdroidcon.todokmp.uimodel.TodoUiItem
 
 class TodoListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     // TODO use UI model?
-    private var itemList: MutableList<TodoItem> = mutableListOf()
-    var items: List<TodoItem>
+    private var itemList: MutableList<TodoUiItem> = mutableListOf()
+    var items: List<TodoUiItem>
         set(value) {
             itemList.apply {
                 clear()
