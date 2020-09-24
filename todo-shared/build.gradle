@@ -9,6 +9,8 @@ kotlin {
                 implementation project(":todo-core")
                 implementation project(":todo-sqldelight-repository")
                 implementation project(":todo-inmemory-repository")
+
+                implementation Deps.reaktive.reaktive
             }
         }
 

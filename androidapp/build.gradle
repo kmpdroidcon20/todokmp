@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion Deps.android.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.kmpdroidcon.toyapp"
-        minSdkVersion 21
-        targetSdkVersion 29
+        applicationId "com.kmpdroidcon.todokmp"
+        minSdkVersion Deps.android.minSdkVersion
+        targetSdkVersion Deps.android.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
@@ -27,8 +27,10 @@ dependencies {
     implementation Deps.kotlin.stdlib
     implementation Deps.android.appCompat
     implementation Deps.android.constraintLayout
+    implementation Deps.android.recyclerview
 
     implementation project(":todo-shared")
+    implementation project(":todo-core")
 
     testImplementation Deps.junit.junit
     androidTestImplementation Deps.android.testRunner
