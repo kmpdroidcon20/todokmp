@@ -6,6 +6,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation project(":todo-util")
+                implementation Deps.reaktive.reaktive
             }
         }
     }

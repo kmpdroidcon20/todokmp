@@ -7,7 +7,7 @@ kotlin {
             dependencies {
                 implementation project(":todo-core")
                 implementation project(":todo-util")
-                implementation Deps.stately.isolate.common
+                implementation Deps.stately.isolate
                 implementation Deps.stately.isoCollections.common
             }
         }
