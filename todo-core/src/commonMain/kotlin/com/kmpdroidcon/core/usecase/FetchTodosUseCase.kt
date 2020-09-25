@@ -7,5 +7,5 @@ import com.kmpdroidcon.core.model.TodoItem
  * Usecase that will provide all the Todo items
  */
 interface FetchTodosUseCase {
-    fun fetch(): SingleWrapper<List<TodoItem>>
+    fun execute(): SingleWrapper<List<TodoItem>>
 }

@@ -6,5 +6,5 @@ import com.badoo.reaktive.completable.CompletableWrapper
  * Usecase to insert a new todo
  */
 interface AddTodoUseCase {
-    fun insert(content: String): CompletableWrapper
+    fun execute(todo: String): CompletableWrapper
 }

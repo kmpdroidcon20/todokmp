@@ -9,6 +9,13 @@ kotlin {
                 implementation Deps.reaktive.reaktive
             }
         }
+
+        commonTest {
+            dependencies {
+                implementation Deps.kotlinx.atomicfu.common
+                implementation Deps.reaktive.testing
+            }
+        }
     }
 }
 

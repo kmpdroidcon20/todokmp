@@ -1,5 +1,8 @@
 package com.kmpdroidcon.todokmp
 
+import com.kmpdroidcon.core.di.TodoCoreModule
+import com.kmpdroidcon.todokmp.mock.TimeUtilMock
+import com.kmpdroidcon.todokmp.mock.TodoListRepositoryMock
 import com.badoo.reaktive.completable.wrap
 import com.badoo.reaktive.scheduler.overrideSchedulers
 import com.badoo.reaktive.scheduler.trampolineScheduler
@@ -7,7 +10,6 @@ import com.badoo.reaktive.single.singleOf
 import com.badoo.reaktive.test.base.assertSubscribed
 import com.badoo.reaktive.test.completable.TestCompletable
 import com.badoo.reaktive.test.completable.test
-import com.badoo.reaktive.test.observable.TestObservable
 import com.badoo.reaktive.test.observable.assertValues
 import com.badoo.reaktive.test.observable.test
 import com.careem.mockingbird.test.any
@@ -16,15 +18,15 @@ import com.kmpdroidcon.core.model.TodoItem
 import com.kmpdroidcon.todokmp.mock.AddTodoUseCaseMock
 import com.kmpdroidcon.todokmp.mock.FetchTodosUseCaseMock
 import com.kmpdroidcon.todokmp.uimodel.TodoUiItem
-import com.kmpdroidcon.util.isFrozen
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertFalse
 
 class TodoListViewModelImplTest {
 
     private val addTodoUseCaseMock = AddTodoUseCaseMock()
     private val fetchTodosUseCaseMock = FetchTodosUseCaseMock()
+    private val todoListRepositoryMock = TodoListRepositoryMock()
+    private val timeUtilMock = TimeUtilMock()
     private val testCompletableWrapper = TestCompletable().wrap()
 
     @BeforeTest
@@ -48,8 +50,11 @@ class TodoListViewModelImplTest {
             TodoUiItem(TODO_2_TIMESTAMP_EXPECTED, TODO_2_TITLE)
         )
         val todoListViewModel = TodoListViewModelImpl(
-            addTodoUseCase = addTodoUseCaseMock,
-            fetchTodosUseCase = fetchTodosUseCaseMock
+            addTodoUseCase = TodoCoreModule.providesAddTodoUseCase(
+                todoListRepositoryMock,
+                timeUtilMock
+            ),
+            fetchTodosUseCase = TodoCoreModule.providesFetchTodosUseCase()
         )
         todoListViewModel.initialize()
         todoListViewModel.todoStream

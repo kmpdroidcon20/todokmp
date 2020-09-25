@@ -14,3 +14,5 @@ expect val <T> T.isFrozen: Boolean
  * Call on an object which should never be frozen. Will help debug when something inadvertently is.
  */
 expect fun Any.ensureNeverFrozen()
+
+expect fun getSystemTimeInMillis(): Long

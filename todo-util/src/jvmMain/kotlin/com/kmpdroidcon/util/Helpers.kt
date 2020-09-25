@@ -6,3 +6,5 @@ actual val <T> T.isFrozen: Boolean
     get() = false
 
 actual fun Any.ensureNeverFrozen() {}
+
+actual fun getSystemTimeInMillis() = System.currentTimeMillis()
