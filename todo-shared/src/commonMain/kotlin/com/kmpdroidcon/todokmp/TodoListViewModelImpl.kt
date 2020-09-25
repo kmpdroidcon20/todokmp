@@ -12,7 +12,7 @@ import com.badoo.reaktive.single.map
 import com.badoo.reaktive.single.observeOn
 import com.badoo.reaktive.single.subscribe
 import com.badoo.reaktive.single.subscribeOn
-import com.badoo.reaktive.subject.publish.PublishSubject
+import com.badoo.reaktive.subject.behavior.BehaviorSubject
 import com.kmpdroidcon.core.usecase.AddTodoUseCase
 import com.kmpdroidcon.core.usecase.FetchTodosUseCase
 import com.kmpdroidcon.todokmp.uimodel.TodoUiItem
@@ -32,8 +32,7 @@ internal class TodoListViewModelImpl(
     }
 
     override fun initialize() {
-        println("before fetch: $isFrozen")
-        val todoSubject = PublishSubject<List<TodoUiItem>>()
+        val todoSubject = BehaviorSubject<List<TodoUiItem>>(emptyList())
         _todoStream = todoSubject.wrap()
         val disposable = fetchTodosUseCase.fetch()
             .subscribeOn(ioScheduler)
@@ -51,7 +50,6 @@ internal class TodoListViewModelImpl(
                 todoSubject.onNext(it)
             }
         compositeDisposable.add(disposable)
-        println("after fetch: $isFrozen")
     }
 
     override fun destroy() {
