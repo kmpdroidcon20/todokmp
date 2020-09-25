@@ -22,11 +22,16 @@ class TodoListViewModelWrapper: ObservableObject {
 
     init(viewModel : TodoListViewModel) {
         self.viewModel = viewModel
+        self.viewModel.initialize()
         self.viewModel.todoStream.subscribe(isThreadLocal: false) { [weak self] (todos) in
             self?.todos = (todos as! [TodoUiItem]).map { (item : TodoUiItem) -> TodoSwiftUiItem in
                 TodoSwiftUiItem(timestamp: item.timestamp, content: item.content)
             }
         }
+    }
+
+    deinit {
+        self.viewModel.deinitialize()
     }
 
     func createTodo(content: String) {
@@ -36,7 +41,7 @@ class TodoListViewModelWrapper: ObservableObject {
 
 struct ContentView: View {
     // TODO understand DI here
-    @ObservedObject private var viewModel : TodoListViewModelWrapper = TodoListViewModelWrapper(viewModel: TodoListViewModelImpl())
+    @ObservedObject private var viewModel : TodoListViewModelWrapper = TodoListViewModelWrapper(viewModel: TodoSharedModule().providesTodoListViewModel())
     @State private var todoContent: String = "TODO content"
     var body: some View {
         VStack{

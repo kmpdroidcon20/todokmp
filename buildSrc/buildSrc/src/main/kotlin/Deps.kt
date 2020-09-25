@@ -104,10 +104,12 @@ object Deps {
 
     object Stately {
         val isoCollections = IsoCollections
-        val isolate = Isolate
+        val isolate = Isolate()
 
-        object Isolate {
-            const val common = "co.touchlab:stately-isolate:$statelyVersion"
+        class Isolate(
+            private val name: String = "co.touchlab:stately-isolate:$statelyVersion"
+        ) : CharSequence by name {
+            override fun toString() = name
         }
 
         object IsoCollections {

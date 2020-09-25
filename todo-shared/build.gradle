@@ -11,6 +11,8 @@ kotlin {
                 implementation project(":todo-inmemory-repository")
 
                 implementation Deps.reaktive.reaktive
+                implementation Deps.stately.isolate
+                implementation Deps.kotlinx.atomicfu.common
             }
         }
 
