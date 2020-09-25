@@ -15,18 +15,42 @@ struct TodoSwiftUiItem: Identifiable {
     var content: String
 }
 
-struct ContentView: View {
-    // TODO make this one subscribe to shared ViewModel
-    let modelData : [TodoSwiftUiItem] = [
-        TodoUiItem(timestamp: "12/12/2020 12:40", content: "Todo 1"),
-        TodoUiItem(timestamp: "12/12/2020 12:50", content: "Todo 2"),
-        ].map{item in TodoSwiftUiItem(timestamp: item.timestamp, content: item.content)}
+class TodoListViewModelWrapper: ObservableObject {
+    var viewModel : TodoListViewModel
+    // Store state
+    @Published var todos: [TodoSwiftUiItem] = []
 
+    init(viewModel : TodoListViewModel) {
+        self.viewModel = viewModel
+        self.viewModel.todoStream.subscribe(isThreadLocal: false) { [weak self] (todos) in
+            self?.todos = (todos as! [TodoUiItem]).map { (item : TodoUiItem) -> TodoSwiftUiItem in
+                TodoSwiftUiItem(timestamp: item.timestamp, content: item.content)
+            }
+        }
+    }
+
+    func createTodo(content: String) {
+        self.viewModel.createTodo(content: content)
+    }
+}
+
+struct ContentView: View {
+    // TODO understand DI here
+    @ObservedObject private var viewModel : TodoListViewModelWrapper = TodoListViewModelWrapper(viewModel: TodoListViewModelImpl())
+    @State private var todoContent: String = "TODO content"
     var body: some View {
-        List(modelData) { item in
-            VStack {
-                Text(item.timestamp)
-                Text(item.content)
+        VStack{
+            HStack{
+                TextField("TODO content", text: $todoContent)
+                Button("Create", action: {
+                    self.viewModel.createTodo(content: self.todoContent)
+                })
+            }
+            List(viewModel.todos) { item in
+                VStack {
+                    Text(item.timestamp)
+                    Text(item.content)
+                }
             }
         }
     }
