@@ -31,7 +31,7 @@ class TodoListViewModelWrapper: ObservableObject {
     }
 
     deinit {
-        self.viewModel.deinitialize()
+        self.viewModel.destroy()
     }
 
     func createTodo(content: String) {

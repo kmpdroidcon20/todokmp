@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        viewModel.deinitialize()
+        viewModel.destroy()
         super.onDestroy()
     }
 }

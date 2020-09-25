@@ -54,7 +54,7 @@ internal class TodoListViewModelImpl(
         println("after fetch: $isFrozen")
     }
 
-    override fun deinitialize() {
+    override fun destroy() {
         compositeDisposable.clear()
     }
 

@@ -5,7 +5,7 @@ import com.kmpdroidcon.todokmp.uimodel.TodoUiItem
 
 interface TodoListViewModel {
     fun initialize()
-    fun deinitialize()
+    fun destroy()
     val todoStream: ObservableWrapper<List<TodoUiItem>>
     fun createTodo(content: String)
 }
