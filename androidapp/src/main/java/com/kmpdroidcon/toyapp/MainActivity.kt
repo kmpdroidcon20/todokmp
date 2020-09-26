@@ -7,16 +7,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kmpdroidcon.todokmp.TodoListViewModel
+import com.kmpdroidcon.todokmp.dependency.PlatformDependency
 import com.kmpdroidcon.todokmp.di.TodoSharedModule
 
 class MainActivity : AppCompatActivity() {
 
     // TODO inject viewModel here
-    private val viewModel: TodoListViewModel = TodoSharedModule.providesTodoListViewModel()
+    private lateinit var viewModel: TodoListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        viewModel = TodoSharedModule.providesTodoListViewModel(
+            PlatformDependency(applicationContext)
+        )
         viewModel.initialize()
 
         val recyclerView = findViewById<RecyclerView>(R.id.todolist)

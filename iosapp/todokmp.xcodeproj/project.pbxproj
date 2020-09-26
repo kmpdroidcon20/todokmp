@@ -3,22 +3,21 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FACD1CA3DBBADA9CFF48AC5 /* Pods_todokmp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB22EAED6370DE068238AF4 /* Pods_todokmp.framework */; };
 		A10C8B0C2518ECC000D06B20 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C8B0B2518ECC000D06B20 /* AppDelegate.swift */; };
 		A10C8B0E2518ECC000D06B20 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C8B0D2518ECC000D06B20 /* SceneDelegate.swift */; };
 		A10C8B102518ECC000D06B20 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C8B0F2518ECC000D06B20 /* ContentView.swift */; };
 		A10C8B122518ECC200D06B20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A10C8B112518ECC200D06B20 /* Assets.xcassets */; };
 		A10C8B152518ECC200D06B20 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A10C8B142518ECC200D06B20 /* Preview Assets.xcassets */; };
 		A10C8B182518ECC200D06B20 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A10C8B162518ECC200D06B20 /* LaunchScreen.storyboard */; };
-		A93355C77EB5A734D1A27D8A /* Pods_todokmp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67EED95D70780BFEA6191272 /* Pods_todokmp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2BB0E522E1B5CCFE6D74DCD3 /* Pods-todokmp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todokmp.release.xcconfig"; path = "Target Support Files/Pods-todokmp/Pods-todokmp.release.xcconfig"; sourceTree = "<group>"; };
-		67EED95D70780BFEA6191272 /* Pods_todokmp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_todokmp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9180678463E008D74B05B152 /* Pods-todokmp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todokmp.debug.xcconfig"; path = "Target Support Files/Pods-todokmp/Pods-todokmp.debug.xcconfig"; sourceTree = "<group>"; };
 		A10C8B082518ECC000D06B20 /* todokmp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = todokmp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A10C8B0B2518ECC000D06B20 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -28,6 +27,7 @@
 		A10C8B142518ECC200D06B20 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A10C8B172518ECC200D06B20 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A10C8B192518ECC200D06B20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FDB22EAED6370DE068238AF4 /* Pods_todokmp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_todokmp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,7 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A93355C77EB5A734D1A27D8A /* Pods_todokmp.framework in Frameworks */,
+				1FACD1CA3DBBADA9CFF48AC5 /* Pods_todokmp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -48,7 +48,6 @@
 				9180678463E008D74B05B152 /* Pods-todokmp.debug.xcconfig */,
 				2BB0E522E1B5CCFE6D74DCD3 /* Pods-todokmp.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -95,7 +94,7 @@
 		FBF8FCB0483E2E96E67A90CF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				67EED95D70780BFEA6191272 /* Pods_todokmp.framework */,
+				FDB22EAED6370DE068238AF4 /* Pods_todokmp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

@@ -8,17 +8,17 @@ import com.kmpdroidcon.core.usecase.AddTodoUseCase
 class AddTodoUseCaseMock : AddTodoUseCase, Mock {
 
     object Method {
-        const val insert = "insert"
+        const val execute = "execute"
     }
 
     object Arg {
-        const val content = "content"
+        const val todo = "todo"
     }
 
-    override fun insert(content: String): CompletableWrapper = mock(
-        methodName = Method.insert,
+    override fun execute(todo: String): CompletableWrapper = mock(
+        methodName = Method.execute,
         arguments = mapOf(
-            Arg.content to content
+            Arg.todo to todo
         )
     )
 }

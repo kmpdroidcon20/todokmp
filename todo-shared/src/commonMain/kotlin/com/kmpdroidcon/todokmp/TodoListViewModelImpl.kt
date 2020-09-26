@@ -34,7 +34,7 @@ internal class TodoListViewModelImpl(
     override fun initialize() {
         val todoSubject = BehaviorSubject<List<TodoUiItem>>(emptyList())
         _todoStream = todoSubject.wrap()
-        val disposable = fetchTodosUseCase.fetch()
+        val disposable = fetchTodosUseCase.execute()
             .subscribeOn(ioScheduler)
             .map {
                 val uiTodos = it.map { todoItem ->
@@ -62,7 +62,7 @@ internal class TodoListViewModelImpl(
         }
 
     override fun createTodo(content: String) {
-        addTodoUseCase.insert(content)
+        addTodoUseCase.execute(content)
             .subscribeOn(ioScheduler)
             .observeOn(mainScheduler)
             .subscribe()

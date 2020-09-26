@@ -9,10 +9,10 @@ import com.kmpdroidcon.core.usecase.FetchTodosUseCase
 class FetchTodosUseCaseMock : FetchTodosUseCase, Mock {
 
     object Method {
-        const val fetch = "fetch"
+        const val execute = "execute"
     }
 
-    override fun fetch(): SingleWrapper<List<TodoItem>> = mock(
-        methodName = Method.fetch
+    override fun execute(): SingleWrapper<List<TodoItem>> = mock(
+        methodName = Method.execute
     )
 }

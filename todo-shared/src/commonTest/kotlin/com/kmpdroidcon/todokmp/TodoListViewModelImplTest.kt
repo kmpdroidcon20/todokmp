@@ -4,10 +4,10 @@ import com.badoo.reaktive.completable.wrap
 import com.badoo.reaktive.scheduler.overrideSchedulers
 import com.badoo.reaktive.scheduler.trampolineScheduler
 import com.badoo.reaktive.single.singleOf
+import com.badoo.reaktive.single.wrap
 import com.badoo.reaktive.test.base.assertSubscribed
 import com.badoo.reaktive.test.completable.TestCompletable
 import com.badoo.reaktive.test.completable.test
-import com.badoo.reaktive.test.observable.TestObservable
 import com.badoo.reaktive.test.observable.assertValues
 import com.badoo.reaktive.test.observable.test
 import com.careem.mockingbird.test.any
@@ -16,10 +16,8 @@ import com.kmpdroidcon.core.model.TodoItem
 import com.kmpdroidcon.todokmp.mock.AddTodoUseCaseMock
 import com.kmpdroidcon.todokmp.mock.FetchTodosUseCaseMock
 import com.kmpdroidcon.todokmp.uimodel.TodoUiItem
-import com.kmpdroidcon.util.isFrozen
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertFalse
 
 class TodoListViewModelImplTest {
 
@@ -34,10 +32,10 @@ class TodoListViewModelImplTest {
             main = { trampolineScheduler }
         )
 
-        fetchTodosUseCaseMock.every(methodName = FetchTodosUseCaseMock.Method.fetch) {
+        fetchTodosUseCaseMock.every(methodName = FetchTodosUseCaseMock.Method.execute) {
             singleOf(
                 TODOS
-            )
+            ).wrap()
         }
     }
 
@@ -60,8 +58,8 @@ class TodoListViewModelImplTest {
     @Test
     fun givenViewModelInitializedWhenTodoCreationThenCreationDelegatedToUseCase() {
         addTodoUseCaseMock.every(
-            methodName = AddTodoUseCaseMock.Method.insert,
-            arguments = mapOf(AddTodoUseCaseMock.Arg.content to any())
+            methodName = AddTodoUseCaseMock.Method.execute,
+            arguments = mapOf(AddTodoUseCaseMock.Arg.todo to any())
         ) { testCompletableWrapper }
         val todoListViewModel = TodoListViewModelImpl(
             addTodoUseCase = addTodoUseCaseMock,
