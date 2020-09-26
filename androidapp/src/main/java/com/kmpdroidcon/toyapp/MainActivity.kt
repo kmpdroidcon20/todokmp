@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kmpdroidcon.todokmp.TodoListViewModel
 import com.kmpdroidcon.todokmp.dependency.PlatformDependency
+import com.kmpdroidcon.todokmp.di.DIGraph
 import com.kmpdroidcon.todokmp.di.TodoSharedModule
 
 class MainActivity : AppCompatActivity() {
@@ -18,9 +19,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        viewModel = TodoSharedModule.providesTodoListViewModel(
-            PlatformDependency(applicationContext)
-        )
+        viewModel = DIGraph().build(PlatformDependency(applicationContext))
         viewModel.initialize()
 
         val recyclerView = findViewById<RecyclerView>(R.id.todolist)
