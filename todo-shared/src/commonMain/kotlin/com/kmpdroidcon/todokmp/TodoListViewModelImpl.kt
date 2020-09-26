@@ -6,7 +6,11 @@ import com.badoo.reaktive.observable.ObservableWrapper
 import com.badoo.reaktive.observable.wrap
 import com.badoo.reaktive.scheduler.ioScheduler
 import com.badoo.reaktive.scheduler.mainScheduler
-import com.badoo.reaktive.single.*
+import com.badoo.reaktive.single.Single
+import com.badoo.reaktive.single.map
+import com.badoo.reaktive.single.observeOn
+import com.badoo.reaktive.single.subscribe
+import com.badoo.reaktive.single.subscribeOn
 import com.badoo.reaktive.subject.behavior.BehaviorSubject
 import com.kmpdroidcon.core.usecase.AddTodoUseCase
 import com.kmpdroidcon.core.usecase.FetchTodosUseCase
