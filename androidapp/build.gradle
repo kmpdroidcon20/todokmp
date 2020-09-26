@@ -31,7 +31,7 @@ dependencies {
     implementation Deps.reaktive.reaktive
 
     implementation project(":todo-shared")
-    implementation project(":todo-core")
+    implementation project(":todo-domain")
 
     testImplementation Deps.junit.junit
     androidTestImplementation Deps.android.testRunner

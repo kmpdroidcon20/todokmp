@@ -8,7 +8,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation project(":todo-util")
-                implementation project(":todo-core")
+                implementation project(":todo-domain")
                 implementation Deps.sqlDelight.runtime
                 implementation Deps.kotlinx.atomicfu.common
             }
