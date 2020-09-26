@@ -1,5 +1,7 @@
 package com.kmpdroidcon.todokmp.data
 
+import com.badoo.reaktive.scheduler.ioScheduler
+import com.badoo.reaktive.scheduler.submit
 import com.kmpdroidcon.core.model.TodoItem
 import com.kmpdroidcon.core.repository.TodoListRepository
 import com.kmpdroidcon.todokmp.data.dependency.InMemoryTodoDataSource
@@ -23,7 +25,9 @@ internal class TodoListRepositoryImpl(
         if(memoryInitialized.value){
             memoryDataSource.addTodo(todoItem)
         }
-        diskDataSource.addTodo(todoItem)
+        ioScheduler.submit {
+            diskDataSource.addTodo(todoItem)
+        }
     }
 
     override fun getAll(): List<TodoItem> {
