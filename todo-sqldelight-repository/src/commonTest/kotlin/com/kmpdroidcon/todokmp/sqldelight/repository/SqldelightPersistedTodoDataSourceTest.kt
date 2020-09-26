@@ -8,14 +8,14 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class TodoListSqldelightRepositoryTest {
+class SqldelightPersistedTodoDataSourceTest {
     private val todoItemDaoMock = TodoItemDaoMock()
 
-    private lateinit var todoListSqldelightRepository: TodoListSqldelightRepository
+    private lateinit var persistedTodoDataSourceImpl: PersistedTodoDataSourceImpl
 
     @BeforeTest
     fun setup() {
-        todoListSqldelightRepository = TodoListSqldelightRepository(
+        persistedTodoDataSourceImpl = PersistedTodoDataSourceImpl(
             todoItemDaoMock
         )
     }
@@ -27,7 +27,7 @@ class TodoListSqldelightRepositoryTest {
         todoItemDaoMock.every(
             methodName = TodoItemDaoMock.Method.count
         ) { 0 }
-        todoListSqldelightRepository.addTodo(todoItem)
+        persistedTodoDataSourceImpl.addTodo(todoItem)
 
         todoItemDaoMock.verify(
             methodName = TodoItemDaoMock.Method.insert,
@@ -37,8 +37,6 @@ class TodoListSqldelightRepositoryTest {
         todoItemDaoMock.verify(
             methodName = TodoItemDaoMock.Method.count
         )
-
-        assertEquals(1, todoListSqldelightRepository.count())
     }
 
     @Test
@@ -48,7 +46,7 @@ class TodoListSqldelightRepositoryTest {
         todoItemDaoMock.every(
             methodName = TodoItemDaoMock.Method.count
         ) { 5 }
-        todoListSqldelightRepository.addTodo(todoItem)
+        persistedTodoDataSourceImpl.addTodo(todoItem)
 
         todoItemDaoMock.verify(
             methodName = TodoItemDaoMock.Method.insert,
@@ -57,8 +55,6 @@ class TodoListSqldelightRepositoryTest {
         todoItemDaoMock.verify(
             methodName = TodoItemDaoMock.Method.count
         )
-
-        assertEquals(6, todoListSqldelightRepository.count())
     }
 
     @Test
@@ -74,22 +70,8 @@ class TodoListSqldelightRepositoryTest {
             methodName = TodoItemDaoMock.Method.selectAll
         ) { todoItemModels }
 
-        val result = todoListSqldelightRepository.getAll()
+        val result = persistedTodoDataSourceImpl.getAll()
         assertEquals(todoItemExpectedResult, result)
-        assertEquals(todoItemModels.size, todoListSqldelightRepository.count())
-    }
-
-    @Test
-    fun testCount() {
-        todoItemDaoMock.every(
-            methodName = TodoItemDaoMock.Method.count
-        ) { 5 }
-
-        val count = todoListSqldelightRepository.count()
-        todoItemDaoMock.verify(
-            methodName = TodoItemDaoMock.Method.count
-        )
-        assertEquals(5, count)
     }
 
     companion object {

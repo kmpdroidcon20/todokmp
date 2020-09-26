@@ -9,8 +9,9 @@ kotlin {
             dependencies {
                 implementation project(":todo-util")
                 implementation project(":todo-domain")
+                implementation project(":todo-data")
                 implementation Deps.sqlDelight.runtime
-                implementation Deps.kotlinx.atomicfu.common
+                implementation Deps.kotlinx.atomicfu
             }
         }
 

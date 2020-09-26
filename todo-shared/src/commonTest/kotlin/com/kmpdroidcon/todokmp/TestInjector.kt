@@ -1,5 +1,7 @@
 package com.kmpdroidcon.todokmp
 
+import com.kmpdroidcon.todokmp.dependency.PlatformDependency
+
 /**
  * Created by
  * Marco Signoretto
@@ -8,4 +10,5 @@ package com.kmpdroidcon.todokmp
  */
 expect class TestInjector {
     fun getTodoDatabase(): Database
+    fun platformDependency(): PlatformDependency
 }

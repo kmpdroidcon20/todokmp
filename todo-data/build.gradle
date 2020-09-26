@@ -5,17 +5,16 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation project(":todo-domain")
-                implementation project(":todo-data")
                 implementation project(":todo-util")
-                implementation Deps.stately.isolate
-                implementation Deps.stately.isoCollections.common
+                implementation project(":todo-domain")
+                implementation Deps.reaktive.reaktive
+                implementation Deps.kotlinx.atomicfu
             }
         }
 
         commonTest {
             dependencies {
-                implementation Deps.kotlinx.atomicfu
+                implementation Deps.reaktive.testing
             }
         }
     }

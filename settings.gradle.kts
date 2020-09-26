@@ -1,5 +1,6 @@
 include(":androidapp")
 include(":todo-domain")
+include(":todo-data")
 include(":todo-shared")
 include(":todo-util")
 include(":todo-sqldelight-repository")

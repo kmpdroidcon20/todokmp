@@ -16,7 +16,6 @@ class TodoListRepositoryMock : TodoListRepository, Mock {
     object Method {
         const val addTodo = "addTodo"
         const val getAll = "getAll"
-        const val count = "count"
     }
 
     object Arg {
@@ -30,9 +29,5 @@ class TodoListRepositoryMock : TodoListRepository, Mock {
 
     override fun getAll(): List<TodoItem> = mock(
         methodName = Method.getAll
-    )
-
-    override fun count(): Int = mock(
-        methodName = Method.count
     )
 }
