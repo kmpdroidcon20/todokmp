@@ -41,7 +41,7 @@ class TodoListViewModelWrapper: ObservableObject {
 
 struct ContentView: View {
     // TODO understand DI here
-    @ObservedObject private var viewModel : TodoListViewModelWrapper = TodoListViewModelWrapper(viewModel: TodoSharedModule().providesTodoListViewModel(platformDependency: PlatformDependency()))
+    @ObservedObject private var viewModel : TodoListViewModelWrapper = TodoListViewModelWrapper(viewModel: DIGraph().build(platformDependency: PlatformDependency()))
     @State private var todoContent: String = "TODO content"
     var body: some View {
         VStack{
