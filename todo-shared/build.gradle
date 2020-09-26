@@ -25,6 +25,12 @@ kotlin {
             }
         }
 
+        commonTest {
+            dependencies {
+                implementation Deps.reaktive.testing
+            }
+        }
+
         nativeCommonTest {
             dependencies {
                 implementation Deps.sqlDelight.driver.native
