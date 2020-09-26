@@ -5,7 +5,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation project(":todo-core")
+                implementation project(":todo-domain")
                 implementation project(":todo-util")
                 implementation Deps.stately.isolate
                 implementation Deps.stately.isoCollections.common

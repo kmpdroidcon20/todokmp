@@ -33,7 +33,7 @@ kotlin {
         iosX64Main {
             dependencies {
                 api project(":todo-shared")
-                api project(":todo-core")
+                api project(":todo-domain")
                 api project(":todo-util")
                 api project(":todo-sqldelight-repository")
                 api project(":todo-inmemory-repository")
@@ -60,7 +60,7 @@ kotlin {
         it.binaries.framework(frameworkName) {
             // Exporting dependencies in framework.
             export project(":todo-shared")
-            export project(":todo-core")
+            export project(":todo-domain")
             export project(":todo-util")
             export project(":todo-sqldelight-repository")
 

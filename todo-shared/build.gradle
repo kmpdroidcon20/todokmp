@@ -6,7 +6,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation project(":todo-util")
-                implementation project(":todo-core")
+                implementation project(":todo-domain")
                 implementation project(":todo-sqldelight-repository")
                 implementation project(":todo-inmemory-repository")
 
