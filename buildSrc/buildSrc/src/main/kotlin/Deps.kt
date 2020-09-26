@@ -58,12 +58,15 @@ object Deps {
     }
 
     object Kotlinx {
-        val atomicfu = AtomicFu
+        val atomicfu = AtomicFu()
         val serialization = Serialization
 
-        object AtomicFu {
-            const val plugin = "org.jetbrains.kotlinx:atomicfu-gradle-plugin:$atomicFuVersion"
-            const val common = "org.jetbrains.kotlinx:atomicfu:$atomicFuVersion"
+        class AtomicFu(
+            private val name: String = "org.jetbrains.kotlinx:atomicfu:$atomicFuVersion"
+        ) : CharSequence by name {
+
+            val plugin = "org.jetbrains.kotlinx:atomicfu-gradle-plugin:$atomicFuVersion"
+            override fun toString() = name
         }
 
         object Serialization {

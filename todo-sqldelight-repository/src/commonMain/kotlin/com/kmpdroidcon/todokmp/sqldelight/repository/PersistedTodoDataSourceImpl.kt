@@ -1,11 +1,11 @@
 package com.kmpdroidcon.todokmp.sqldelight.repository
 
 import com.kmpdroidcon.core.model.TodoItem
-import com.kmpdroidcon.core.repository.TodoListRepository
+import com.kmpdroidcon.todokmp.data.dependency.PersistedTodoDataSource
 import com.kmpdroidcon.todokmp.sqldelight.dao.TodoItemDao
 import kotlinx.atomicfu.atomic
 
-class TodoListSqldelightRepository(private val todoItemDao: TodoItemDao) : TodoListRepository {
+internal class PersistedTodoDataSourceImpl(private val todoItemDao: TodoItemDao) : PersistedTodoDataSource {
     private var todoCount: Int
         set(value) {
             todoCountRef.value = value
@@ -24,11 +24,6 @@ class TodoListSqldelightRepository(private val todoItemDao: TodoItemDao) : TodoL
         todoItemDao.selectAll().map {
             TodoItem(it.timestamp, it.todo)
         }.also { todoCount = it.size }
-
-    override fun count(): Int {
-        refreshCount()
-        return todoCount
-    }
 
     private fun refreshCount() {
         if (todoCount < 0) {

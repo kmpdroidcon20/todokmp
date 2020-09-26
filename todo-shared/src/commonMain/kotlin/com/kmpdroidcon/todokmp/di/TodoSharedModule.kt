@@ -1,14 +1,16 @@
 package com.kmpdroidcon.todokmp.di
 
 import com.kmpdroidcon.core.di.TodoCoreModule
-import com.kmpdroidcon.core.repository.TodoListRepository
 import com.kmpdroidcon.todokmp.TodoListViewModel
 import com.kmpdroidcon.todokmp.TodoListViewModelImpl
+import com.kmpdroidcon.todokmp.data.dependency.PersistedTodoDataSource
+import com.kmpdroidcon.todokmp.data.di.TodoDataModule
+import com.kmpdroidcon.todokmp.datasource.di.TodoInMemoryDataSourceModule
 import com.kmpdroidcon.todokmp.dependency.PlatformDependency
 import com.kmpdroidcon.todokmp.dependency.PlatformDependencyProvider
 import com.kmpdroidcon.todokmp.sqldelight.dao.TodoItemDao
 import com.kmpdroidcon.todokmp.sqldelight.dao.TodoItemDaoImpl
-import com.kmpdroidcon.todokmp.sqldelight.repository.RepositorySqlDelightProvider
+import com.kmpdroidcon.todokmp.sqldelight.di.SqlDelightTodoDataSourceModule
 import com.kmpdroidcon.util.time.TimeUtilImpl
 import kotlinx.atomicfu.atomic
 
@@ -36,10 +38,9 @@ object TodoSharedModule {
      *
      * For simplicity just using Sqldelight repository
      */
-    private fun providesTodoListRepository(platformDependency: PlatformDependency): TodoListRepository {
+    private fun providesPersistedTodoDataSource(platformDependency: PlatformDependency): PersistedTodoDataSource {
         val todoItemDao = provideTodoItemDao(platformDependency)
-        val repositoryProvider = RepositorySqlDelightProvider(todoItemDao)
-        return repositoryProvider.todoListRepository()
+        return SqlDelightTodoDataSourceModule.providesPersistedTodoDataSource(todoItemDao)
     }
 
     /**
@@ -50,7 +51,10 @@ object TodoSharedModule {
      * @return
      */
     fun providesTodoListViewModel(platformDependency: PlatformDependency): TodoListViewModel {
-        val todoListRepository = providesTodoListRepository(platformDependency)
+        val todoListRepository = TodoDataModule.providesTodoListRepository(
+            memoryDataSource = TodoInMemoryDataSourceModule.providesInMemoryTodoDataSource(),
+            diskDataSource = providesPersistedTodoDataSource(platformDependency)
+        )
         val timeUtil = TimeUtilImpl()
         return TodoListViewModelImpl(
             addTodoUseCase = TodoCoreModule.providesAddTodoUseCase(todoListRepository, timeUtil),

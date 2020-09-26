@@ -1,8 +1,8 @@
-package com.kmpdroidcon.core.repository
+package com.kmpdroidcon.todokmp.data.dependency
 
 import com.kmpdroidcon.core.model.TodoItem
 
-interface TodoListRepository {
+interface PersistedTodoDataSource {
     fun addTodo(todoItem: TodoItem)
     fun getAll(): List<TodoItem>
 }

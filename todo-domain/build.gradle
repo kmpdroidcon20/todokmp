@@ -12,7 +12,7 @@ kotlin {
 
         commonTest {
             dependencies {
-                implementation Deps.kotlinx.atomicfu.common
+                implementation Deps.kotlinx.atomicfu
                 implementation Deps.reaktive.testing
             }
         }
