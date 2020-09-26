@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FACD1CA3DBBADA9CFF48AC5 /* Pods_todokmp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB22EAED6370DE068238AF4 /* Pods_todokmp.framework */; };
 		A10C8B0C2518ECC000D06B20 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C8B0B2518ECC000D06B20 /* AppDelegate.swift */; };
 		A10C8B0E2518ECC000D06B20 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C8B0D2518ECC000D06B20 /* SceneDelegate.swift */; };
 		A10C8B102518ECC000D06B20 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C8B0F2518ECC000D06B20 /* ContentView.swift */; };
@@ -26,6 +27,7 @@
 		A10C8B142518ECC200D06B20 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A10C8B172518ECC200D06B20 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A10C8B192518ECC200D06B20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FDB22EAED6370DE068238AF4 /* Pods_todokmp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_todokmp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FACD1CA3DBBADA9CFF48AC5 /* Pods_todokmp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +94,7 @@
 		FBF8FCB0483E2E96E67A90CF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FDB22EAED6370DE068238AF4 /* Pods_todokmp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

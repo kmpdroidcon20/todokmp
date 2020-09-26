@@ -1,12 +1,10 @@
 package com.kmpdroidcon.todokmp
 
-import com.kmpdroidcon.core.di.TodoCoreModule
-import com.kmpdroidcon.todokmp.mock.TimeUtilMock
-import com.kmpdroidcon.todokmp.mock.TodoListRepositoryMock
 import com.badoo.reaktive.completable.wrap
 import com.badoo.reaktive.scheduler.overrideSchedulers
 import com.badoo.reaktive.scheduler.trampolineScheduler
 import com.badoo.reaktive.single.singleOf
+import com.badoo.reaktive.single.wrap
 import com.badoo.reaktive.test.base.assertSubscribed
 import com.badoo.reaktive.test.completable.TestCompletable
 import com.badoo.reaktive.test.completable.test
@@ -25,8 +23,6 @@ class TodoListViewModelImplTest {
 
     private val addTodoUseCaseMock = AddTodoUseCaseMock()
     private val fetchTodosUseCaseMock = FetchTodosUseCaseMock()
-    private val todoListRepositoryMock = TodoListRepositoryMock()
-    private val timeUtilMock = TimeUtilMock()
     private val testCompletableWrapper = TestCompletable().wrap()
 
     @BeforeTest
@@ -36,10 +32,10 @@ class TodoListViewModelImplTest {
             main = { trampolineScheduler }
         )
 
-        fetchTodosUseCaseMock.every(methodName = FetchTodosUseCaseMock.Method.fetch) {
+        fetchTodosUseCaseMock.every(methodName = FetchTodosUseCaseMock.Method.execute) {
             singleOf(
                 TODOS
-            )
+            ).wrap()
         }
     }
 
@@ -50,11 +46,8 @@ class TodoListViewModelImplTest {
             TodoUiItem(TODO_2_TIMESTAMP_EXPECTED, TODO_2_TITLE)
         )
         val todoListViewModel = TodoListViewModelImpl(
-            addTodoUseCase = TodoCoreModule.providesAddTodoUseCase(
-                todoListRepositoryMock,
-                timeUtilMock
-            ),
-            fetchTodosUseCase = TodoCoreModule.providesFetchTodosUseCase()
+            addTodoUseCase = addTodoUseCaseMock,
+            fetchTodosUseCase = fetchTodosUseCaseMock
         )
         todoListViewModel.initialize()
         todoListViewModel.todoStream
@@ -65,8 +58,8 @@ class TodoListViewModelImplTest {
     @Test
     fun givenViewModelInitializedWhenTodoCreationThenCreationDelegatedToUseCase() {
         addTodoUseCaseMock.every(
-            methodName = AddTodoUseCaseMock.Method.insert,
-            arguments = mapOf(AddTodoUseCaseMock.Arg.content to any())
+            methodName = AddTodoUseCaseMock.Method.execute,
+            arguments = mapOf(AddTodoUseCaseMock.Arg.todo to any())
         ) { testCompletableWrapper }
         val todoListViewModel = TodoListViewModelImpl(
             addTodoUseCase = addTodoUseCaseMock,
