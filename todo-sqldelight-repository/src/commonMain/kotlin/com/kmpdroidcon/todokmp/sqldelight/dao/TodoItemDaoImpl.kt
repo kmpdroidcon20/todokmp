@@ -4,7 +4,7 @@ import com.kmpdroidcon.core.model.TodoItem
 import com.kmpdroidcon.todokmp.Database
 import com.kmpdroidcon.todokmp.TodoItemModel
 
-class TodoItemDaoImpl(database: Database) : TodoItemDao {
+internal class TodoItemDaoImpl(database: Database) : TodoItemDao {
     private val db = database.todoItemModelQueries
 
     override fun insert(todoItem: TodoItem) {
