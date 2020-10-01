@@ -4,9 +4,7 @@ import com.badoo.reaktive.test.completable.test
 import com.careem.mockingbird.test.every
 import com.careem.mockingbird.test.verify
 import com.kmpdroidcon.core.mock.TimeUtilMock
-import com.kmpdroidcon.core.mock.TimeUtilMock.Method.getTimeInMillis
 import com.kmpdroidcon.core.mock.TodoListRepositoryMock
-import com.kmpdroidcon.core.mock.TodoListRepositoryMock.Method.addTodo
 import com.kmpdroidcon.core.model.TodoItem
 import com.kmpdroidcon.util.threadedTest
 import kotlinx.atomicfu.atomic
@@ -17,12 +15,11 @@ class AddTodoUseCaseImplTest {
     private val todoListRepositoryMock = TodoListRepositoryMock()
     private val timeUtilMock = TimeUtilMock()
 
-    private val addTodoUseCaseImpl =
-        AddTodoUseCaseImpl(todoListRepositoryMock, timeUtilMock)
+    private val addTodoUseCase: AddTodoUseCase = AddTodoUseCaseImpl(todoListRepositoryMock, timeUtilMock)
 
     @BeforeTest
     fun setup() {
-        timeUtilMock.every(methodName = getTimeInMillis) { TIMESTAMP }
+        timeUtilMock.every(methodName = TimeUtilMock.Method.getTimeInMillis) { TIMESTAMP }
     }
 
     @Test
@@ -31,15 +28,29 @@ class AddTodoUseCaseImplTest {
         threadedTest {
             val todo = "Play Fifa"
             val testItem = TodoItem(TIMESTAMP, todo)
-            addTodoUseCaseImpl.execute(todo).test()
+            addTodoUseCase.execute(todo).test()
 
-            timeUtilMock.verify(exactly = runs.addAndGet(1), methodName = getTimeInMillis)
+            timeUtilMock.verify(exactly = runs.addAndGet(1), methodName = TimeUtilMock.Method.getTimeInMillis)
             todoListRepositoryMock.verify(
                 exactly = runs.value,
-                methodName = addTodo,
+                methodName = TodoListRepositoryMock.Method.addTodo,
                 arguments = mapOf(TodoListRepositoryMock.Arg.todoItem to testItem)
             )
         }
+    }
+
+    @Test
+    fun testExecuteNoThreading() {
+        val todo = "Cook amazing Pasta"
+        val expectTestItem = TodoItem(TIMESTAMP, todo)
+
+        addTodoUseCase.execute(todo).test()
+
+        timeUtilMock.verify(methodName = TimeUtilMock.Method.getTimeInMillis)
+        todoListRepositoryMock.verify(
+            methodName = TodoListRepositoryMock.Method.addTodo,
+            arguments = mapOf(TodoListRepositoryMock.Arg.todoItem to expectTestItem)
+        )
     }
 
     companion object {
