@@ -12,13 +12,11 @@ import com.kmpdroidcon.todokmp.Database
 import com.kmpdroidcon.todokmp.PlatformIntegrationTest
 import com.kmpdroidcon.todokmp.data.dependency.InMemoryTodoDataSource
 import com.kmpdroidcon.todokmp.data.dependency.PersistedTodoDataSource
-import com.kmpdroidcon.todokmp.datasource.di.TodoInMemoryDataSourceModule
-import com.kmpdroidcon.todokmp.di.DIGraph
+import com.kmpdroidcon.todokmp.di.DIGraphImpl
 import com.kmpdroidcon.todokmp.mock.InMemoryTodoDataSourceSpy
 import com.kmpdroidcon.todokmp.mock.PersistedTodoDataSourceSpy
 import com.kmpdroidcon.todokmp.sqldelight.DatabaseInitializer
 import com.kmpdroidcon.todokmp.sqldelight.dao.TodoItemDao
-import com.kmpdroidcon.todokmp.sqldelight.di.SqlDelightTodoDataSourceModule
 import com.kmpdroidcon.util.isFrozen
 import kotlinx.atomicfu.atomic
 import kotlin.test.BeforeTest
@@ -92,7 +90,7 @@ class TodokmpIntegrationTest : PlatformIntegrationTest() {
     }
 
 
-    class TestDIGraph : DIGraph() {
+    class TestDIGraph : DIGraphImpl() {
         private val _memoryTodoDataSource = atomic<InMemoryTodoDataSourceSpy?>(null)
         val memoryTodoDataSource: InMemoryTodoDataSourceSpy
             get() {
@@ -110,26 +108,20 @@ class TodokmpIntegrationTest : PlatformIntegrationTest() {
                 return _database.value!!
             }
 
-        override fun memoryDataSource(): InMemoryTodoDataSource {
-            val value =
-                InMemoryTodoDataSourceSpy(TodoInMemoryDataSourceModule.providesInMemoryTodoDataSource())
-            _memoryTodoDataSource.value = value
-            return value
-        }
+        override fun memoryDataSource(): InMemoryTodoDataSource =
+            InMemoryTodoDataSourceSpy(super.memoryDataSource()).apply {
+                _memoryTodoDataSource.value = this
+            }
 
-        override fun buildPersistedTodoDataSource(todoItemDao: TodoItemDao): PersistedTodoDataSource {
-            val value = PersistedTodoDataSourceSpy(
-                SqlDelightTodoDataSourceModule.providesPersistedTodoDataSource(todoItemDao)
-            )
-            _persistedTodoDataSource.value = value
-            return value
-        }
+        override fun buildPersistedTodoDataSource(todoItemDao: TodoItemDao): PersistedTodoDataSource =
+            PersistedTodoDataSourceSpy(super.buildPersistedTodoDataSource(todoItemDao)).apply {
+                _persistedTodoDataSource.value = this
+            }
 
-        override fun database(databaseInitializer: DatabaseInitializer): Database {
-            val db = super.database(databaseInitializer)
-            _database.value = db
-            return db
-        }
+        override fun database(databaseInitializer: DatabaseInitializer): Database =
+            super.database(databaseInitializer).apply {
+                _database.value = this
+            }
     }
 
     companion object {
