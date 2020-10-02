@@ -9,6 +9,5 @@ import com.kmpdroidcon.todokmp.dependency.PlatformDependency
  * on 23/09/2020.
  */
 expect class TestInjector {
-    fun getTodoDatabase(): Database
     fun platformDependency(): PlatformDependency
 }

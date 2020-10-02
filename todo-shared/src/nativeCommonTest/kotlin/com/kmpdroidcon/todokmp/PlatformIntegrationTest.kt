@@ -10,5 +10,4 @@ package com.kmpdroidcon.todokmp
 actual abstract class PlatformIntegrationTest {
     private val testInjector = TestInjector()
     actual fun testInjector(): TestInjector = testInjector
-    actual open fun setup() {}
 }

@@ -17,17 +17,17 @@ import com.kmpdroidcon.todokmp.sqldelight.dao.TodoItemDao
 import com.kmpdroidcon.todokmp.sqldelight.di.SqlDelightTodoDataSourceModule
 import com.kmpdroidcon.util.time.TimeUtil
 
-open class DIGraph {
+open class DIGraphImpl: DIGraph {
 
-    open fun memoryDataSource() = TodoInMemoryDataSourceModule.providesInMemoryTodoDataSource()
-    open fun todoItemDao(database: Database) =
+    override fun memoryDataSource() = TodoInMemoryDataSourceModule.providesInMemoryTodoDataSource()
+    override fun todoItemDao(database: Database) =
         SqlDelightTodoDataSourceModule.provideTodoItemDao(database)
 
-    open fun buildPersistedTodoDataSource(todoItemDao: TodoItemDao) =
+    override fun buildPersistedTodoDataSource(todoItemDao: TodoItemDao) =
         SqlDelightTodoDataSourceModule.providesPersistedTodoDataSource(todoItemDao)
 
-    open fun timeUtil() = TodoSharedModule.providesTimeUtil()
-    open fun todoListRepository(
+    override fun timeUtil() = TodoSharedModule.providesTimeUtil()
+    override fun todoListRepository(
         memoryDataSource: InMemoryTodoDataSource,
         diskDataSource: PersistedTodoDataSource
     ) = TodoDataModule.providesTodoListRepository(
@@ -35,7 +35,7 @@ open class DIGraph {
         diskDataSource = diskDataSource
     )
 
-    open fun addTodoUseCase(
+    override fun addTodoUseCase(
         todoListRepository: TodoListRepository,
         timeUtil: TimeUtil
     ) = TodoCoreModule.providesAddTodoUseCase(
@@ -43,13 +43,13 @@ open class DIGraph {
         timeUtil = timeUtil
     )
 
-    open fun fetchTodosUseCase(
+    override fun fetchTodosUseCase(
         todoListRepository: TodoListRepository
     ) = TodoCoreModule.providesFetchTodosUseCase(
         todoListRepository = todoListRepository
     )
 
-    open fun todoListViewModel(
+    override fun todoListViewModel(
         addTodoUseCase: AddTodoUseCase,
         fetchTodosUseCase: FetchTodosUseCase
     ) = TodoSharedModule.providesTodoListViewModel(
@@ -57,16 +57,16 @@ open class DIGraph {
         fetchTodosUseCase = fetchTodosUseCase
     )
 
-    open fun databaseInitializer(platformDependencyProvider: PlatformDependencyProvider): DatabaseInitializer = TodoSharedModule.providesDatabaseInitializer(platformDependencyProvider)
+    override fun databaseInitializer(platformDependencyProvider: PlatformDependencyProvider): DatabaseInitializer = TodoSharedModule.providesDatabaseInitializer(platformDependencyProvider)
 
-    open fun database(
+    override fun database(
         databaseInitializer: DatabaseInitializer
     )= databaseInitializer.getDatabase()
 
-    open fun platformDependencyProvider(platformDependency: PlatformDependency) = TodoSharedModule.providesPlatformDependencyProvider(platformDependency)
+    override fun platformDependencyProvider(platformDependency: PlatformDependency) = TodoSharedModule.providesPlatformDependencyProvider(platformDependency)
 
 
-    fun build(platformDependency: PlatformDependency): TodoListViewModel {
+    override fun build(platformDependency: PlatformDependency): TodoListViewModel {
         val platformDependencyProvider = platformDependencyProvider(platformDependency)
         val databaseInitializer = databaseInitializer(platformDependencyProvider)
         val database = database(databaseInitializer)
@@ -79,4 +79,20 @@ open class DIGraph {
         val fetchTodosUseCase = fetchTodosUseCase(todoListRepository)
         return todoListViewModel(addTodoUseCase, fetchTodosUseCase)
     }
+}
+
+
+interface DIGraph {
+    fun memoryDataSource(): InMemoryTodoDataSource
+    fun todoItemDao(database: Database): TodoItemDao
+    fun buildPersistedTodoDataSource(todoItemDao: TodoItemDao): PersistedTodoDataSource
+    fun timeUtil(): TimeUtil
+    fun todoListRepository(memoryDataSource: InMemoryTodoDataSource, diskDataSource: PersistedTodoDataSource): TodoListRepository
+    fun addTodoUseCase(todoListRepository: TodoListRepository, timeUtil: TimeUtil): AddTodoUseCase
+    fun fetchTodosUseCase(todoListRepository: TodoListRepository): FetchTodosUseCase
+    fun todoListViewModel(addTodoUseCase: AddTodoUseCase, fetchTodosUseCase: FetchTodosUseCase): TodoListViewModel
+    fun databaseInitializer(platformDependencyProvider: PlatformDependencyProvider): DatabaseInitializer
+    fun database(databaseInitializer: DatabaseInitializer): Database
+    fun platformDependencyProvider(platformDependency: PlatformDependency): PlatformDependencyProvider
+    fun build(platformDependency: PlatformDependency): TodoListViewModel
 }

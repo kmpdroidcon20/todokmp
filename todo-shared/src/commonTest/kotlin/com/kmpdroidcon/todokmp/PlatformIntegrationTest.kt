@@ -8,5 +8,4 @@ package com.kmpdroidcon.todokmp
  */
 expect abstract class PlatformIntegrationTest() {
     fun testInjector(): TestInjector
-    open fun setup()
 }

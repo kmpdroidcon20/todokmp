@@ -11,13 +11,7 @@ import com.kmpdroidcon.todokmp.dependency.PlatformDependency
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 
 actual class TestInjector {
-    actual fun getTodoDatabase(): Database {
-        val driver = NativeSqliteDriver(Database.Schema, "integration_test.db")
-        return Database(driver)
-    }
-
     actual fun platformDependency(): PlatformDependency{
         return PlatformDependency()
     }
-
 }
