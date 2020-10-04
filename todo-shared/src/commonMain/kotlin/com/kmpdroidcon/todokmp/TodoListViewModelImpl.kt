@@ -16,6 +16,7 @@ import com.kmpdroidcon.core.usecase.AddTodoUseCase
 import com.kmpdroidcon.core.usecase.FetchTodosUseCase
 import com.kmpdroidcon.todokmp.uimodel.TodoUiItem
 import com.kmpdroidcon.util.ensureNeverFrozen
+import com.kmpdroidcon.util.timeStampToDateString
 import kotlinx.atomicfu.atomic
 
 internal class TodoListViewModelImpl(
@@ -63,7 +64,7 @@ internal class TodoListViewModelImpl(
         .map {
             val uiTodos = it.map { todoItem ->
                 TodoUiItem(
-                    todoItem.timestamp.toString(), // TODO fix this
+                    todoItem.timestamp.timeStampToDateString(),
                     todoItem.todo
                 )
             }

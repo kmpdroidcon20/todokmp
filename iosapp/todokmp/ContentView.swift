@@ -42,22 +42,23 @@ class TodoListViewModelWrapper: ObservableObject {
 struct ContentView: View {
     // TODO understand DI here
     @ObservedObject private var viewModel : TodoListViewModelWrapper = TodoListViewModelWrapper(viewModel: DIGraphImpl().build(platformDependency: PlatformDependency()))
-    @State private var todoContent: String = "TODO content"
+    @State private var todoContent: String = ""
     var body: some View {
         VStack{
             HStack{
-                TextField("TODO content", text: $todoContent)
+                TextField("TODO", text: $todoContent)
                 Button("Create", action: {
                     self.viewModel.createTodo(content: self.todoContent)
                 })
+                    
             }
             List(viewModel.todos) { item in
-                VStack {
-                    Text(item.timestamp)
+                HStack {
                     Text(item.content)
+                    Text(item.timestamp).fontWeight(.ultraLight)
                 }
             }
-        }
+        }.padding()
     }
 }
 
