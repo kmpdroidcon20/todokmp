@@ -43,7 +43,7 @@ class TodoListViewModelImplTest {
     fun givenTodosWhenSubscribeAfterInitThenReceiveUiItemsOnTheStream() {
         val expectedUiTodos = listOf(
             TodoUiItem(TODO_1_TIMESTAMP_EXPECTED, TODO_1_TITLE),
-            TodoUiItem(TODO_2_TIMESTAMP_EXPECTED, TODO_2_TITLE)
+            TodoUiItem(TODO_2_FORMATTED_EXPECTED, TODO_2_TITLE)
         )
         val todoListViewModel = TodoListViewModelImpl(
             addTodoUseCase = addTodoUseCaseMock,
@@ -74,11 +74,11 @@ class TodoListViewModelImplTest {
 
     companion object {
         private const val CONTENT = "CONTENT"
-        private const val TODO_1_TIMESTAMP = 0L
-        private const val TODO_1_TIMESTAMP_EXPECTED = "0"
+        private const val TODO_1_TIMESTAMP = 1601796329523L
+        private const val TODO_1_TIMESTAMP_EXPECTED = "2020.10.04 11:25:29"
         private const val TODO_1_TITLE = "Todo 1"
-        private const val TODO_2_TIMESTAMP = 12463874L
-        private const val TODO_2_TIMESTAMP_EXPECTED = "12463874"
+        private const val TODO_2_TIMESTAMP = 1601796309995L
+        private const val TODO_2_FORMATTED_EXPECTED = "2020.10.04 11:25:09"
         private const val TODO_2_TITLE = "Todo 2"
         private val TODOS = listOf(
             TodoItem(TODO_1_TIMESTAMP, TODO_1_TITLE),

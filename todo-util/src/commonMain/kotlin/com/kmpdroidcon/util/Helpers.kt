@@ -16,3 +16,9 @@ expect val <T> T.isFrozen: Boolean
 expect fun Any.ensureNeverFrozen()
 
 expect fun getSystemTimeInMillis(): Long
+
+expect fun Long.timeStampToDateString(): String
+
+object DateFormatConstants {
+    internal const val DATE_FORMAT_STRING = "yyyy.MM.dd HH:mm:ss"
+}
