@@ -19,6 +19,7 @@ import com.kmpdroidcon.todokmp.sqldelight.DatabaseInitializer
 import com.kmpdroidcon.todokmp.sqldelight.dao.TodoItemDao
 import com.kmpdroidcon.util.isFrozen
 import kotlinx.atomicfu.atomic
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -27,8 +28,8 @@ import kotlin.test.assertNotNull
 
 class TodokmpIntegrationTest : PlatformIntegrationTest() {
 
-    val diGraph = TestDIGraph()
-    val todoListViewModel = diGraph.build(testInjector().platformDependency())
+    private val diGraph = TestDIGraph()
+    private val todoListViewModel = diGraph.build(testInjector().platformDependency())
 
     @BeforeTest
     fun setUp() {
@@ -36,9 +37,6 @@ class TodokmpIntegrationTest : PlatformIntegrationTest() {
             main = { trampolineScheduler },
             io = { trampolineScheduler }
         )
-
-        // Clean Up DB, better approach is to provide in memory impl in case of testing
-        diGraph.database.todoItemModelQueries.deleteAll()
     }
 
     @Test
@@ -47,22 +45,18 @@ class TodokmpIntegrationTest : PlatformIntegrationTest() {
         assertFalse(todoListViewModel.isFrozen)
 
         val testObserver = todoListViewModel.todoStream.test()
-
-        // No items on init
-        testObserver.assertValue(emptyList())
+        testObserver.assertValue(emptyList()) // No items on init
 
         todoListViewModel.createTodo(TODO_CONTENT_1)
 
         verifyTodoMemoryInsert(TODO_CONTENT_1)
         verifyTodoPersistenceInsert(TODO_CONTENT_1)
 
-        // New item emitted with right content
-        assertEquals(2, testObserver.values.size)
+        assertEquals(2, testObserver.values.size) // New item emitted with right content
         assertEquals(TODO_CONTENT_1, testObserver.values.last().first().content)
     }
 
     private fun verifyTodoMemoryInsert(todoContent: String) {
-        // Verify memory insertion
         val inMemoryTodoItemSlot = Slot<TodoItem>()
         diGraph.memoryTodoDataSource.verify(
             methodName = InMemoryTodoDataSourceSpy.Method.addTodo,
@@ -76,7 +70,6 @@ class TodokmpIntegrationTest : PlatformIntegrationTest() {
     }
 
     private fun verifyTodoPersistenceInsert(todoContent: String) {
-        // Verify persistence insertion
         val persistedTodoItemSlot = Slot<TodoItem>()
         diGraph.persistedTodoDataSource.verify(
             methodName = PersistedTodoDataSourceSpy.Method.addTodo,
@@ -113,6 +106,12 @@ class TodokmpIntegrationTest : PlatformIntegrationTest() {
                 _memoryTodoDataSource.value = this
             }
 
+        // Uncomment following lines and comment lines above to reproduce immutability issue on iOS
+//        override fun memoryDataSource(): InMemoryTodoDataSource =
+//            InMemoryTodoDataSourceSpy(TodoInMemoryDataSourceModule.providesBrokenInMemoryTodoDataSource()).apply {
+//                _memoryTodoDataSource.value = this
+//            }
+
         override fun buildPersistedTodoDataSource(todoItemDao: TodoItemDao): PersistedTodoDataSource =
             PersistedTodoDataSourceSpy(super.buildPersistedTodoDataSource(todoItemDao)).apply {
                 _persistedTodoDataSource.value = this
@@ -122,6 +121,11 @@ class TodokmpIntegrationTest : PlatformIntegrationTest() {
             super.database(databaseInitializer).apply {
                 _database.value = this
             }
+    }
+
+    @AfterTest
+    fun tearDown() {
+        diGraph.database.todoItemModelQueries.deleteAll()
     }
 
     companion object {
