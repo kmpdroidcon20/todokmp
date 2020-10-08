@@ -3,7 +3,7 @@ A Kotlin Multiplatform demo Todo app
 
 The goal of this project is to help writing use cases in Kotlin Multiplatform and to test them.
 
-Architectural pattern followed in this project is MVVM and it is also implemented in KMP
+The architectural pattern followed in this project is MVVM, which is also implemented in KMP
 
 We added sample Unit and Integration tests with the help of `MockingBird` library which we
 wrote to help us Mock and Spy in Common tests 
