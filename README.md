@@ -1,5 +1,17 @@
 # todokmp
+A Kotlin Multiplatform demo Todo app
 
+The goal of this project is to help writing use cases in Kotlin Multiplatform and test it.
+
+Architectural pattern followed in this project is MVVM and it is also implemented in KMP
+
+We added sample Unit and Integration tests with the help of `MockingBird` library which we
+wrote to help us Mock and Spy in Common tests 
+
+Note: `MockingBird` will be opened sourced soon. For now we included artifacts to help you run the 
+tests. Please run setup using the script included in the repo as mentioned below to be able to
+compile the tests
+  
 ## Setup ( Mac OS )
 
 To setup the project you need to run the script
