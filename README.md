@@ -1,7 +1,7 @@
 # todokmp
 A Kotlin Multiplatform demo Todo app
 
-The goal of this project is to help writing use cases in Kotlin Multiplatform and test it.
+The goal of this project is to help writing use cases in Kotlin Multiplatform and to test them.
 
 Architectural pattern followed in this project is MVVM and it is also implemented in KMP
 
