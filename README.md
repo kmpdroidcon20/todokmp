@@ -11,7 +11,7 @@ wrote to help us Mock and Spy in Common tests
 This project has been used as an example during the talk:
 Acing your tests with KMP @ droidcon EMEA 2020
 [slides of the talk](https://docs.google.com/presentation/d/1iRgLZvUj7b6eA_bPOAgOv1oxaJE9lID45yZpWt2X5kc/edit?usp=sharing)
- 
+[Video of the talk](https://www.droidcon.com/media-detail?video=470525677)
 
 Note: `MockingBird` will be open-sourced soon. For now, we have included the artifacts to help you run the 
 tests. Please run setup using the script included in the repo as mentioned below to be able to
