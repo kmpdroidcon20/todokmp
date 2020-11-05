@@ -8,6 +8,7 @@ kotlin {
             dependencies {
                 // TODO remove when threadedTest is moved to test module
                 implementation Deps.careem.mockingbird.common
+                implementation "com.careem.mobile.common.definitions:shared:0.0.1"
             }
         }
     }

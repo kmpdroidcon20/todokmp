@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kmpdroidcon.todokmp.TodoListViewModel
 import com.kmpdroidcon.todokmp.dependency.PlatformDependency
 import com.kmpdroidcon.todokmp.di.DIGraphImpl
+import com.kmpdroidcon.todokmp.uimodel.TodoUiItem
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +29,10 @@ class MainActivity : AppCompatActivity() {
             viewModel.createTodo(editText.text.toString())
         }
         val myAdapter = TodoListAdapter()
+
+        // FIXME, this is just to show the issue please remove
+        val list = listOf(TodoUiItem("13245L", "ewrwe"))
+        println(list[0].content)
 
         recyclerView.apply {
             setHasFixedSize(false)

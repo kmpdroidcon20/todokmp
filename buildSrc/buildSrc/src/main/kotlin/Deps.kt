@@ -9,12 +9,12 @@ object Deps {
         "1.5.0-SNAPSHOT" // TODO use the version supporting kotlin 1.4
     private const val statelyVersion = "1.1.0-a1"
     private const val androidGradlePlugin = "4.0.1"
-    private const val testRunnerVersion = "1.0.2"
+    private const val testRunnerVersion = "1.2.0"
     private const val appCompatVersion = "1.1.0"
     private const val constraintLayoutVersion = "1.1.3"
     private const val androidxKtxVersion = "1.2.0"
     private const val reaktiveVersion = "1.1.17"
-    private const val espressoVersion = "3.0.2"
+    private const val espressoVersion = "3.1.0"
     private const val junitVersion = "4.12"
     private const val androidxVersion = "1.0.0"
 
@@ -132,8 +132,9 @@ object Deps {
         const val constraintLayout =
             "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
 
-        const val testRunner = "com.android.support.test:runner:$testRunnerVersion"
-        const val espresso = "com.android.support.test.espresso:espresso-core:$espressoVersion"
+        const val testRunner = "androidx.test:runner:$testRunnerVersion"
+        const val testRules = "androidx.test:rules:$testRunnerVersion"
+        const val espresso = "androidx.test.espresso:espresso-core:$espressoVersion"
         const val recyclerview = "androidx.recyclerview:recyclerview:$androidxVersion"
 
         object Androidx {
