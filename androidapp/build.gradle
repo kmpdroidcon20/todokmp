@@ -12,19 +12,28 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        debug {
+            minifyEnabled true
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources false
+            testProguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
-    implementation Deps.kotlin.stdlib
+    implementation Deps.kotlin.stdlib.jdk8
     implementation Deps.android.appCompat
     implementation Deps.android.constraintLayout
     implementation Deps.android.recyclerview
@@ -35,5 +44,7 @@ dependencies {
 
     testImplementation Deps.junit.junit
     androidTestImplementation Deps.android.testRunner
+    androidTestImplementation Deps.android.testRules
     androidTestImplementation Deps.android.espresso
+    androidTestImplementation Deps.android.androidx.junitAndroidx
 }

@@ -12,6 +12,7 @@ kotlin {
                 implementation project(":todo-inmemory-repository")
 
                 implementation Deps.reaktive.reaktive
+                implementation "com.careem.mobile.common.definitions:shared:0.0.1"
                 implementation Deps.stately.isolate
                 implementation Deps.kotlinx.atomicfu
             }
