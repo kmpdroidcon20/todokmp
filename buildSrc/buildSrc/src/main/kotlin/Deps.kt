@@ -1,19 +1,18 @@
 object Deps {
-    private const val kotlinVersion = "1.4.0"
+    private const val kotlinVersion = "1.4.21"
     private const val junitAndroidxVersion = "1.1.1"
     private const val robolectricVersion = "4.3.1"
-    private const val atomicFuVersion = "0.14.4"
-    private const val serializationVersion = "1.0.0-RC"
-    private const val sqlDelightVersion = "1.4.3"
-    private const val mockingBirdVersion =
-        "1.5.0-SNAPSHOT" // TODO use the version supporting kotlin 1.4
+    private const val atomicFuVersion = "0.15.1"
+    private const val serializationVersion = "1.0.1"
+    private const val sqlDelightVersion = "1.4.4"
+    private const val mockingBirdVersion = "1.5.0-SNAPSHOT" // TODO use the version supporting kotlin 1.4
     private const val statelyVersion = "1.1.0-a1"
-    private const val androidGradlePlugin = "4.0.1"
+    private const val androidGradlePlugin = "4.1.0"
     private const val testRunnerVersion = "1.0.2"
     private const val appCompatVersion = "1.1.0"
     private const val constraintLayoutVersion = "1.1.3"
     private const val androidxKtxVersion = "1.2.0"
-    private const val reaktiveVersion = "1.1.17"
+    private const val reaktiveVersion = "1.1.19"
     private const val espressoVersion = "3.0.2"
     private const val junitVersion = "4.12"
     private const val androidxVersion = "1.0.0"
