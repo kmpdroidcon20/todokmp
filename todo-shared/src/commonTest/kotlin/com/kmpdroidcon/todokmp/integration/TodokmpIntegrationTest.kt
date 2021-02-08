@@ -17,6 +17,7 @@ import com.kmpdroidcon.todokmp.mock.InMemoryTodoDataSourceSpy
 import com.kmpdroidcon.todokmp.mock.PersistedTodoDataSourceSpy
 import com.kmpdroidcon.todokmp.sqldelight.DatabaseInitializer
 import com.kmpdroidcon.todokmp.sqldelight.dao.TodoItemDao
+import com.kmpdroidcon.util.annotation.IgnoreJs
 import com.kmpdroidcon.util.isFrozen
 import kotlinx.atomicfu.atomic
 import kotlin.test.AfterTest
@@ -39,6 +40,7 @@ class TodokmpIntegrationTest : PlatformIntegrationTest() {
         )
     }
 
+    @IgnoreJs
     @Test
     fun testTodoInsertion() {
         todoListViewModel.initialize()

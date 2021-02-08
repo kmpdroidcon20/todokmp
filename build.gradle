@@ -71,8 +71,16 @@ void setupTargetsWithDefaultSourceSets(Project project, List<String> platforms =
         setupAndroidTarget(project)
     }
 
+    setupJsTarget(project)
+
     project.kotlin {
         sourceSets {
+            jvmJsCommonMain.dependsOn commonMain
+            jvmJsCommonTest.dependsOn commonTest
+
+            jsMain.dependsOn jvmJsCommonMain
+            jsTest.dependsOn jvmJsCommonTest
+
             all {
                 group GROUP
                 version VERSION
@@ -118,6 +126,9 @@ private void setupJvmTarget(Project project) {
         targets.fromPreset(presets.jvm, 'jvm')
 
         sourceSets {
+            jvmMain.dependsOn jvmJsCommonMain
+            jvmTest.dependsOn jvmJsCommonTest
+
             jvmMain {
                 dependencies {
 
@@ -131,6 +142,10 @@ private void setupJvmTarget(Project project) {
             }
         }
     }
+}
+
+private void setupJsTarget(Project project) {
+    project.apply plugin: JsPlugin
 }
 
 private void setupAndroidTarget(Project project) {

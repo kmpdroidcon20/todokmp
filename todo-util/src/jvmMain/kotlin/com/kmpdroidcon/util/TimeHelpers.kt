@@ -2,14 +2,7 @@ package com.kmpdroidcon.util
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.*
-
-actual fun <T> T.freeze(): T = this
-
-actual val <T> T.isFrozen: Boolean
-    get() = false
-
-actual fun Any.ensureNeverFrozen() {}
+import java.util.Calendar
 
 actual fun getSystemTimeInMillis() = System.currentTimeMillis()
 
@@ -20,6 +13,7 @@ actual fun Long.timeStampToDateString(): String {
 }
 
 object DateFormatHelper {
+    @Suppress("SimpleDateFormat")
     internal val DATE_FORMAT: DateFormat =
         SimpleDateFormat(DateFormatConstants.DATE_FORMAT_STRING)
 }

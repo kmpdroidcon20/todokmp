@@ -10,6 +10,15 @@ kotlin {
                 implementation Deps.careem.mockingbird.common
             }
         }
+
+        jsMain {
+            dependencies {
+                implementation Deps.kotlin.test.js
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.1.1")
+                implementation(npm("@js-joda/timezone", "2.3.0"))
+                implementation(npm("@js-joda/core", "3.0.0"))
+            }
+        }
     }
 }
 task sourcesJar(type: Jar) {
