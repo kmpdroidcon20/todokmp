@@ -1,14 +1,9 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+
 buildscript {
     repositories {
-        google()
-        jcenter()
-
         mavenCentral()
-        maven { url "https://kotlin.bintray.com/kotlinx" }
-        maven { url "https://plugins.gradle.org/m2/" }
-        maven { url "http://dl.bintray.com/kotlin/kotlin-eap" }
-
-
+        google()
     }
     dependencies {
         classpath Deps.android.plugin
@@ -16,7 +11,7 @@ buildscript {
         classpath Deps.sqlDelight.plugin
         classpath Deps.sqlDelight.runtime
         classpath Deps.kotlinx.atomicfu.plugin
-        classpath Deps.kotlinx.serialization.plugin
+        classpath Deps.careem.mockingbird.plugin
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -27,15 +22,23 @@ allprojects {
     version VERSION
 
     repositories {
-        mavenLocal()
         mavenCentral()
+        mavenLocal()
         google()
-        jcenter()
+    }
+}
 
-        maven { url "http://dl.bintray.com/kotlin/kotlin-eap" }
-        maven { url "https://kotlin.bintray.com/kotlinx" }
-        maven { url "https://plugins.gradle.org/m2/" }
-        maven { url "http://dl.bintray.com/kotlin/kotlinx.html" }
+subprojects { subProject ->
+    // Workaround for debug Android instrumentation (not unit) tests failing
+    // as a part of `sonar` task.
+    //
+    // Note that this tasks aren't yet a part of the regular `build` anyway.
+    subProject.afterEvaluate {
+        // To avoid warnings like this:
+        // "The following Kotlin source sets were configured but not added to any Kotlin compilation:"
+        subProject.extensions.findByType(KotlinMultiplatformExtension)
+                ?.sourceSets
+                ?.removeAll { it.name.contains("androidAndroidTest") }
     }
 }
 
@@ -79,7 +82,7 @@ void setupTargetsWithDefaultSourceSets(Project project, List<String> platforms =
 
                 languageSettings {
                     progressiveMode = true
-                    useExperimentalAnnotation('kotlin.Experimental')
+                    optIn('kotlin.Experimental')
                 }
             }
         }
@@ -109,6 +112,17 @@ private void setupIosTargets(Project project, Boolean addSqlDelightCompilerArgs 
             iosX64Test.dependsOn nativeCommonTest
             iosArm64Main.dependsOn nativeCommonMain
             iosArm64Test.dependsOn nativeCommonTest
+
+            iosX64Test {
+                dependencies {
+                    implementation "com.careem.mockingbird:mockingbird-iosx64:2.0.0-beta04"
+                }
+            }
+            iosArm64Test {
+                dependencies {
+                    implementation "com.careem.mockingbird:mockingbird-iosarm64:2.0.0-beta04"
+                }
+            }
         }
     }
 }
@@ -124,9 +138,11 @@ private void setupJvmTarget(Project project) {
                 }
             }
 
+
             jvmTest {
                 dependencies {
                     implementation Deps.kotlin.test.junit
+                    implementation "com.careem.mockingbird:mockingbird-jvm:2.0.0-beta04"
                 }
             }
         }
@@ -185,6 +201,7 @@ private void setupAndroidTarget(Project project) {
             androidTest {
                 dependencies {
                     implementation Deps.kotlin.test.junit
+                    implementation "com.careem.mockingbird:mockingbird-jvm:2.0.0-beta04"
                 }
             }
         }

@@ -18,13 +18,3 @@ kotlin {
         }
     }
 }
-
-task sourcesJar(type: Jar) {
-    getArchiveBaseName().set("todokmp")
-    getArchiveClassifier().set("sources")
-    from kotlin.sourceSets.commonMain.kotlin.srcDirs, kotlin.sourceSets.jvmMain.kotlin.srcDirs
-}
-
-artifacts {
-    archives sourcesJar
-}
