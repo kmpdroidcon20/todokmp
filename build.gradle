@@ -11,7 +11,6 @@ buildscript {
         classpath Deps.sqlDelight.plugin
         classpath Deps.sqlDelight.runtime
         classpath Deps.kotlinx.atomicfu.plugin
-        classpath Deps.careem.mockingbird.plugin
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -23,7 +22,6 @@ allprojects {
 
     repositories {
         mavenCentral()
-        mavenLocal()
         google()
     }
 }
@@ -112,17 +110,6 @@ private void setupIosTargets(Project project, Boolean addSqlDelightCompilerArgs 
             iosX64Test.dependsOn nativeCommonTest
             iosArm64Main.dependsOn nativeCommonMain
             iosArm64Test.dependsOn nativeCommonTest
-
-            iosX64Test {
-                dependencies {
-                    implementation "com.careem.mockingbird:mockingbird-iosx64:2.0.0-beta04"
-                }
-            }
-            iosArm64Test {
-                dependencies {
-                    implementation "com.careem.mockingbird:mockingbird-iosarm64:2.0.0-beta04"
-                }
-            }
         }
     }
 }
@@ -132,17 +119,9 @@ private void setupJvmTarget(Project project) {
         targets.fromPreset(presets.jvm, 'jvm')
 
         sourceSets {
-            jvmMain {
-                dependencies {
-
-                }
-            }
-
-
             jvmTest {
                 dependencies {
                     implementation Deps.kotlin.test.junit
-                    implementation "com.careem.mockingbird:mockingbird-jvm:2.0.0-beta04"
                 }
             }
         }
@@ -193,15 +172,10 @@ private void setupAndroidTarget(Project project) {
         targets.fromPreset(presets.android, 'android')
 
         sourceSets {
-            androidMain {
-                dependencies {
-                }
-            }
 
             androidTest {
                 dependencies {
                     implementation Deps.kotlin.test.junit
-                    implementation "com.careem.mockingbird:mockingbird-jvm:2.0.0-beta04"
                 }
             }
         }

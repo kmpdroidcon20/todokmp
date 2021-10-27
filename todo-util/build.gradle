@@ -10,22 +10,5 @@ kotlin {
                 implementation Deps.careem.mockingbird.common
             }
         }
-
-        jvmMain {
-            dependencies {
-                implementation "com.careem.mockingbird:mockingbird-jvm:2.0.0-beta04"
-            }
-        }
-
-        iosX64Main {
-            dependencies {
-                implementation "com.careem.mockingbird:mockingbird-iosx64:2.0.0-beta04"
-            }
-        }
-        iosArm64Main {
-            dependencies {
-                implementation "com.careem.mockingbird:mockingbird-iosarm64:2.0.0-beta04"
-            }
-        }
     }
 }
