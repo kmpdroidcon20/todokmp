@@ -66,7 +66,6 @@ object Deps {
         val mockingbird = MockingBird
 
         object MockingBird {
-            const val plugin = "com.careem.mockingbird:mockingbird-compiler:$mockingBirdVersion"
             const val common = "com.careem.mockingbird:mockingbird:$mockingBirdVersion"
         }
     }
