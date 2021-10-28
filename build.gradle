@@ -4,6 +4,12 @@ buildscript {
     repositories {
         mavenCentral()
         google()
+        maven {
+            url 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+            content {
+                includeGroup "com.careem.mockingbird"
+            }
+        }
     }
     dependencies {
         classpath Deps.android.plugin
@@ -11,6 +17,7 @@ buildscript {
         classpath Deps.sqlDelight.plugin
         classpath Deps.sqlDelight.runtime
         classpath Deps.kotlinx.atomicfu.plugin
+        classpath Deps.careem.mockingbird.plugin
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -23,6 +30,12 @@ allprojects {
     repositories {
         mavenCentral()
         google()
+        maven {
+            url 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+            content {
+                includeGroup "com.careem.mockingbird"
+            }
+        }
     }
 }
 
