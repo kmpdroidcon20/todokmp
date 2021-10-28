@@ -13,8 +13,8 @@ import com.badoo.reaktive.test.observable.test
 import com.careem.mockingbird.test.any
 import com.careem.mockingbird.test.every
 import com.kmpdroidcon.core.model.TodoItem
-import com.kmpdroidcon.todokmp.mock.AddTodoUseCaseMock
-import com.kmpdroidcon.todokmp.mock.FetchTodosUseCaseMock
+import com.kmpdroidcon.core.usecase.AddTodoUseCaseMock
+import com.kmpdroidcon.core.usecase.FetchTodosUseCaseMock
 import com.kmpdroidcon.todokmp.uimodel.TodoUiItem
 import kotlin.test.BeforeTest
 import kotlin.test.Test

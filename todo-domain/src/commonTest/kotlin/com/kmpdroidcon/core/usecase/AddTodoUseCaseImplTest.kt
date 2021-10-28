@@ -3,10 +3,10 @@ package com.kmpdroidcon.core.usecase
 import com.badoo.reaktive.test.completable.test
 import com.careem.mockingbird.test.every
 import com.careem.mockingbird.test.verify
-import com.kmpdroidcon.core.mock.TimeUtilMock
-import com.kmpdroidcon.core.mock.TodoListRepositoryMock
 import com.kmpdroidcon.core.model.TodoItem
+import com.kmpdroidcon.core.repository.TodoListRepositoryMock
 import com.kmpdroidcon.util.threadedTest
+import com.kmpdroidcon.util.time.TimeUtilMock
 import kotlinx.atomicfu.atomic
 import kotlin.test.BeforeTest
 import kotlin.test.Test

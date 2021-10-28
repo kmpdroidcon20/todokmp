@@ -4,7 +4,7 @@ object Deps {
     private const val robolectricVersion = "4.3.1"
     private const val atomicFuVersion = "0.16.3"
     private const val sqlDelightVersion = "1.5.2"
-    private const val mockingBirdVersion = "1.14.0"
+    private const val mockingBirdVersion = "2.0.0-beta05"
     private const val statelyVersion = "1.1.10-a1"
     private const val androidGradlePlugin = "4.2.1"
     private const val testRunnerVersion = "1.0.2"
@@ -66,6 +66,7 @@ object Deps {
         val mockingbird = MockingBird
 
         object MockingBird {
+            const val plugin = "com.careem.mockingbird:mockingbird-compiler:$mockingBirdVersion"
             const val common = "com.careem.mockingbird:mockingbird:$mockingBirdVersion"
         }
     }

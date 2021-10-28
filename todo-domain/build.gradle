@@ -1,6 +1,8 @@
 setupMultiplatformLibrary(project)
 setupTargetsWithDefaultSourceSets(project, SupportedTargets.COMMON)
 
+apply plugin: "com.careem.mockingbird"
+
 kotlin {
     sourceSets {
         commonMain {
@@ -17,4 +19,11 @@ kotlin {
             }
         }
     }
+}
+
+mockingBird {
+    generateMocksFor = [
+            'com.kmpdroidcon.util.time.TimeUtil',
+            'com.kmpdroidcon.core.repository.TodoListRepository'
+    ]
 }

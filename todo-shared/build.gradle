@@ -1,6 +1,8 @@
 setupMultiplatformLibrary(project)
 setupTargetsWithDefaultSourceSets(project, SupportedTargets.MOBILE, true)// Sql linking args required by integration tests
 
+apply plugin: "com.careem.mockingbird"
+
 kotlin {
     sourceSets {
         commonMain {
@@ -38,4 +40,12 @@ kotlin {
             }
         }
     }
+}
+
+mockingBird {
+    generateMocksFor = [
+            'com.kmpdroidcon.core.usecase.AddTodoUseCase',
+            'com.kmpdroidcon.core.usecase.FetchTodosUseCase',
+            'com.kmpdroidcon.util.time.TimeUtil'
+    ]
 }
