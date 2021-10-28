@@ -1,19 +1,18 @@
 object Deps {
-    private const val kotlinVersion = "1.4.20"
+    private const val kotlinVersion = "1.5.31"
     private const val junitAndroidxVersion = "1.1.1"
     private const val robolectricVersion = "4.3.1"
-    private const val atomicFuVersion = "0.15.1"
-    private const val serializationVersion = "1.0.1"
-    private const val sqlDelightVersion = "1.4.4"
-    private const val mockingBirdVersion = "1.5.0-SNAPSHOT" // TODO use the version supporting kotlin 1.4
-    private const val statelyVersion = "1.1.0-a1"
-    private const val androidGradlePlugin = "4.1.0"
+    private const val atomicFuVersion = "0.16.3"
+    private const val sqlDelightVersion = "1.5.2"
+    private const val mockingBirdVersion = "1.14.0"
+    private const val statelyVersion = "1.1.10-a1"
+    private const val androidGradlePlugin = "4.2.1"
     private const val testRunnerVersion = "1.0.2"
     private const val appCompatVersion = "1.1.0"
     private const val constraintLayoutVersion = "1.1.3"
     private const val androidxKtxVersion = "1.2.0"
-    private const val reaktiveVersion = "1.1.19"
-    private const val espressoVersion = "3.0.2"
+    private const val reaktiveVersion = "1.2.1"
+    private const val espressoVersion = "3.4.0"
     private const val junitVersion = "4.12"
     private const val androidxVersion = "1.0.0"
 
@@ -34,13 +33,9 @@ object Deps {
         val test = Test
         const val plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
 
-        const val reflectJvm = "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
-
         class Stdlib(
             private val name: String = "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
         ) : CharSequence by name {
-            val jdk8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
-            val js = "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlinVersion"
             val common = "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlinVersion"
 
             override fun toString(): String = name
@@ -49,7 +44,6 @@ object Deps {
         object Test {
             const val common = "org.jetbrains.kotlin:kotlin-test-common:$kotlinVersion"
             const val junit = "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
-            const val js = "org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion"
             const val test = "org.jetbrains.kotlin:kotlin-test:$kotlinVersion"
             const val annotationsCommon =
                 "org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlinVersion"
@@ -58,7 +52,6 @@ object Deps {
 
     object Kotlinx {
         val atomicfu = AtomicFu()
-        val serialization = Serialization
 
         class AtomicFu(
             private val name: String = "org.jetbrains.kotlinx:atomicfu:$atomicFuVersion"
@@ -67,26 +60,12 @@ object Deps {
             val plugin = "org.jetbrains.kotlinx:atomicfu-gradle-plugin:$atomicFuVersion"
             override fun toString() = name
         }
-
-        object Serialization {
-            const val plugin = "org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion"
-            val runtime = Runtime()
-
-
-            class Runtime(
-                private val name: String = "org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion"
-            ) : CharSequence by name {
-
-                override fun toString() = name
-            }
-        }
     }
 
     object Careem {
         val mockingbird = MockingBird
 
         object MockingBird {
-
             const val common = "com.careem.mockingbird:mockingbird:$mockingBirdVersion"
         }
     }
@@ -100,7 +79,6 @@ object Deps {
             const val native = "com.squareup.sqldelight:native-driver:$sqlDelightVersion"
             const val sqlite = "com.squareup.sqldelight:sqlite-driver:$sqlDelightVersion"
             const val android = "com.squareup.sqldelight:android-driver:$sqlDelightVersion"
-            const val js = "com.squareup.sqldelight:sqljs-driver:$sqlDelightVersion"
         }
     }
 
@@ -120,9 +98,9 @@ object Deps {
     }
 
     object Android {
-        const val compileSdkVersion = 29
+        const val compileSdkVersion = 30
         const val minSdkVersion = 21
-        const val targetSdkVersion = 29
+        const val targetSdkVersion = 30
 
         const val plugin = "com.android.tools.build:gradle:$androidGradlePlugin"
         val androidx = Androidx

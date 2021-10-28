@@ -3,9 +3,9 @@ plugins {
 }
 
 repositories {
-    google()
-    jcenter()
     gradlePluginPortal()
+    mavenCentral()
+    google()
 }
 
 

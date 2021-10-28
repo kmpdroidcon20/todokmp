@@ -4,8 +4,8 @@ import com.badoo.reaktive.scheduler.overrideSchedulers
 import com.badoo.reaktive.scheduler.trampolineScheduler
 import com.badoo.reaktive.test.observable.assertValue
 import com.badoo.reaktive.test.observable.test
-import com.careem.mockingbird.test.Slot
 import com.careem.mockingbird.test.capture
+import com.careem.mockingbird.test.slot
 import com.careem.mockingbird.test.verify
 import com.kmpdroidcon.core.model.TodoItem
 import com.kmpdroidcon.todokmp.Database
@@ -57,7 +57,7 @@ class TodokmpIntegrationTest : PlatformIntegrationTest() {
     }
 
     private fun verifyTodoMemoryInsert(todoContent: String) {
-        val inMemoryTodoItemSlot = Slot<TodoItem>()
+        val inMemoryTodoItemSlot = slot<TodoItem>()
         diGraph.memoryTodoDataSource.verify(
             methodName = InMemoryTodoDataSourceSpy.Method.addTodo,
             arguments = mapOf(
@@ -70,7 +70,7 @@ class TodokmpIntegrationTest : PlatformIntegrationTest() {
     }
 
     private fun verifyTodoPersistenceInsert(todoContent: String) {
-        val persistedTodoItemSlot = Slot<TodoItem>()
+        val persistedTodoItemSlot = slot<TodoItem>()
         diGraph.persistedTodoDataSource.verify(
             methodName = PersistedTodoDataSourceSpy.Method.addTodo,
             arguments = mapOf(

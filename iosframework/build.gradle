@@ -1,5 +1,4 @@
 apply plugin: 'kotlin-multiplatform'
-apply plugin: 'kotlinx-serialization'
 
 import org.apache.tools.ant.filters.ReplaceTokens
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
@@ -62,12 +61,7 @@ kotlin {
             export project(":todo-domain")
             export project(":todo-util")
             export project(":todo-sqldelight-repository")
-
-            freeCompilerArgs += [
-                    "-Xobjc-generics", // enable experimental extended Objective-C generics support
-                    "-Xg0", // enable experimental dSYM file generation for release binaries
-            ]
-            transitiveExport = true
+            transitiveExport = false
         }
     }
 
